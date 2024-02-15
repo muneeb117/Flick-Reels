@@ -9,10 +9,11 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../components/loading_indicator.dart';
 import '../../../routes/name.dart';
-import '../components/divider.dart';
-import '../components/row_field.dart';
-import '../components/third_party_plugins.dart';
 import 'package:get/get.dart';
+
+import '../widgets/divider.dart';
+import '../widgets/row_field.dart';
+import '../widgets/third_party_plugins.dart';
 
 class SignInOptionScreen extends StatelessWidget {
   SignInOptionScreen({super.key});
@@ -78,7 +79,7 @@ class SignInOptionScreen extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                buildDivider(
+             const   buildDivider(
                   text: 'or',
                 ),
 
@@ -99,7 +100,7 @@ class SignInOptionScreen extends StatelessWidget {
                     TextSpan(
                       style: TextStyle(fontSize: 14.sp, color: Colors.black),
                       children: <TextSpan>[
-                        TextSpan(text: 'By signing up, you agree to our '),
+                     const   TextSpan(text: 'By signing up, you agree to our '),
                         TextSpan(
                           text: 'Privacy Policy',
                           style: TextStyle(color: AppColors.primaryBackground),

@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../utils/app_constraints.dart';
 import '../../../utils/colors.dart';
-import '../../advance_media_production_suite/amps_screen.dart';
 import '../../shorts/short_video_screen.dart';
 
 Widget buildPage(index) {
@@ -17,7 +16,8 @@ Widget buildPage(index) {
     ShortVideoScreen(),
     DiscoverScreen(),
     VideoPickerScreen(),
-    AdvancedMediaProductionSuite(),
+    Center(child: Text("he"),),
+   // AdvancedMediaProductionSuite(),
     ProfileScreen(uid: authController.user!.uid,),
   ];
   return _widgets[index];

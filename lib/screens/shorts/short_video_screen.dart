@@ -1,11 +1,11 @@
-import 'package:flick_reels/screens/shorts/components/download_share_video.dart';
+import 'package:flick_reels/screens/shorts/widgets/built_user_details.dart';
+import 'package:flick_reels/screens/shorts/widgets/download_share_video.dart';
+import 'package:flick_reels/screens/shorts/widgets/like_share_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../Controllers/video_controller.dart';
 import '../../components/video_player_item.dart';
-import 'components/built_user_details.dart';
-import 'components/like_share_comment.dart';
 
 class ShortVideoScreen extends StatefulWidget {
   const ShortVideoScreen({Key? key}) : super(key: key);

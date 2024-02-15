@@ -1,8 +1,4 @@
 import 'package:flick_reels/components/reusable_button.dart';
-import 'package:flick_reels/screens/authentication/components/ProfileAvatar.dart';
-import 'package:flick_reels/screens/authentication/components/divider.dart';
-import 'package:flick_reels/screens/authentication/components/row_field.dart';
-import 'package:flick_reels/screens/authentication/components/third_party_plugins.dart';
 import 'package:flick_reels/screens/authentication/register/bloc/register_bloc.dart';
 import 'package:flick_reels/screens/authentication/register/bloc/register_state.dart';
 import 'package:flutter/gestures.dart';
@@ -15,8 +11,12 @@ import '../../../routes/name.dart';
 import '../../../utils/colors.dart';
 import '../../rules_privacy/community_guidlines.dart';
 import '../../rules_privacy/privacy_policy.dart';
-import '../components/build_text_field.dart';
-import '../components/reusable_text.dart';
+import '../widgets/ProfileAvatar.dart';
+import '../widgets/build_text_field.dart';
+import '../widgets/divider.dart';
+import '../widgets/reusable_text.dart';
+import '../widgets/row_field.dart';
+import '../widgets/third_party_plugins.dart';
 import 'bloc/register_event.dart';
 import 'controller/register_controller.dart';
 
@@ -33,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return BlocBuilder<RegisterBloc,RegisterState>(builder: (context,state){
       return    Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          padding:const EdgeInsets.symmetric(horizontal: 15.0),
           child: SingleChildScrollView(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -3,6 +3,8 @@ import 'package:flick_reels/screens/authentication/ForgotPassword/forgot_notific
 import 'package:flick_reels/screens/authentication/register/register_screen.dart';
 import 'package:flick_reels/screens/authentication/sign_in/bloc/sign_in_bloc.dart';
 import 'package:flick_reels/screens/authentication/sign_in/sign_in_screen.dart';
+import 'package:flick_reels/screens/discover/bloc/discvoer_bloc.dart';
+import 'package:flick_reels/screens/discover/discover_screen.dart';
 import 'package:flick_reels/screens/search/search_screen.dart';
 import 'package:flick_reels/screens/splash_screen/bloc/splash_bloc.dart';
 import 'package:flick_reels/screens/splash_screen/splash_screen.dart';
@@ -74,6 +76,13 @@ class AppPage {
         create: (_) => AppBlocs(),
       ),
       page: const ApplicationPage(),
+    ),
+    PageEntity(
+      route: AppRoutes.discover,
+      bloc: BlocProvider(
+        create: (_) => DiscoverBloc(),
+      ),
+      page: const DiscoverScreen(),
     ),
 
 

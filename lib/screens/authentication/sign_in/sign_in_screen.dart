@@ -1,21 +1,22 @@
 import 'package:flick_reels/components/reusable_button.dart';
-import 'package:flick_reels/screens/authentication/components/row_field.dart';
-import 'package:flick_reels/screens/authentication/components/third_party_plugins.dart';
 import 'package:flick_reels/screens/authentication/sign_in/bloc/sign_in_bloc.dart';
 import 'package:flick_reels/screens/authentication/sign_in/bloc/sign_in_events.dart';
 import 'package:flick_reels/screens/authentication/sign_in/bloc/sign_in_states.dart';
 import 'package:flick_reels/screens/authentication/sign_in/controller/sign_in_controller.dart';
 import 'package:flick_reels/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flick_reels/screens/authentication/components/reusable_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../components/loading_indicator.dart';
 import '../../../routes/name.dart';
-import '../components/build_text_field.dart';
-import '../components/divider.dart';
 import 'package:get/get.dart';
+
+import '../widgets/build_text_field.dart';
+import '../widgets/divider.dart';
+import '../widgets/reusable_text.dart';
+import '../widgets/row_field.dart';
+import '../widgets/third_party_plugins.dart';
 
 
 class SignInScreen extends StatefulWidget {

@@ -15,6 +15,7 @@ class AppColors {
 
   /// Stroke Colors
   static const Color strokeColor = Color.fromARGB(255, 216, 218, 220);
+  static const Color containerStroke = Color.fromARGB(255, 191, 191, 191);
 
   //build dot non active color
   static const Color nonActive = Color.fromARGB(255, 53, 56, 63);
