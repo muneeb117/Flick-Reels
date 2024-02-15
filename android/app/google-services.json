@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "62770887782",
+    "project_id": "flick-reels",
+    "storage_bucket": "flick-reels.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62770887782:android:74305a7f1da83387fac1a7",
+        "android_client_info": {
+          "package_name": "com.example.flick_reels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62770887782-6tovrh6c247hspfr8p5987m2nrot3jpj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flick_reels",
+            "certificate_hash": "2ddf181a9bfca74b07039c3c592bac79c357fc32"
+          }
+        },
+        {
+          "client_id": "62770887782-1akj39a8g7i8ed4bbo8cfsr1g0pt28fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4_q3u-eFzC4VdMpKwaBhhPx13wSxThBg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62770887782-1akj39a8g7i8ed4bbo8cfsr1g0pt28fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
