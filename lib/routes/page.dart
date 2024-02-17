@@ -5,6 +5,8 @@ import 'package:flick_reels/screens/authentication/sign_in/bloc/sign_in_bloc.dar
 import 'package:flick_reels/screens/authentication/sign_in/sign_in_screen.dart';
 import 'package:flick_reels/screens/discover/bloc/discvoer_bloc.dart';
 import 'package:flick_reels/screens/discover/discover_screen.dart';
+import 'package:flick_reels/screens/script_generator/bloc/script_bloc.dart';
+import 'package:flick_reels/screens/script_generator/script_generation_screen.dart';
 import 'package:flick_reels/screens/search/search_screen.dart';
 import 'package:flick_reels/screens/splash_screen/bloc/splash_bloc.dart';
 import 'package:flick_reels/screens/splash_screen/splash_screen.dart';
@@ -84,7 +86,13 @@ class AppPage {
       ),
       page: const DiscoverScreen(),
     ),
-
+    PageEntity(
+      route: AppRoutes.script,
+      bloc: BlocProvider(
+        create: (_) => ScriptBloc(),
+      ),
+      page:  ScriptGeneratorScreen(),
+    ),
 
   ];
 

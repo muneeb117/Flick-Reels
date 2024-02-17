@@ -8,6 +8,7 @@ import '../../../utils/colors.dart'; // Ensure this path is correct for your pro
 class BuildTextField extends StatefulWidget {
   final String text;
   final TextInputType? textType;
+
   final String iconName;
   final bool isPhoneNumber;
   final Function(String)? onValueChange; // Callback for value change

@@ -4,6 +4,7 @@ import 'package:flick_reels/screens/discover/bloc/discover_events.dart';
 import 'package:flick_reels/screens/discover/bloc/discover_state.dart';
 import 'package:flick_reels/screens/discover/widgets/feature_tile_widget.dart';
 import 'package:flick_reels/screens/discover/widgets/discover_page_widgets.dart';
+import 'package:flick_reels/screens/script_generator/script_generation_screen.dart';
 import 'package:flick_reels/screens/teleprompting/src/teleprompter_widget.dart';
 import 'package:flick_reels/utils/app_constraints.dart';
 import 'package:flick_reels/utils/colors.dart';
@@ -145,7 +146,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       iconPath: 'disover_container_4',
                       subtitle: 'Generate script for your short video & Teleprompt.',
                       onTap: () {
-                        Get.to(TeleprompterWidget(text: "heelo"));
+                        Get.to(ScriptGeneratorScreen());
                       },
                     ),
                   ],

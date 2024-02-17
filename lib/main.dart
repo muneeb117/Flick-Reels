@@ -2,13 +2,17 @@ import 'package:flick_reels/routes/page.dart';
 import 'package:flick_reels/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'Controllers/authentication_controller.dart';
 import 'global.dart';
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
+
   await Global.init();
+
   Get.put(AuthenticationController()); // Instantiating the controller
   runApp(const MyApp());
 }

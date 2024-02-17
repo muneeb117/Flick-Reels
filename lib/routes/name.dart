@@ -13,6 +13,7 @@ class AppRoutes{
   static const community="/community";
   static const search="/search";
   static const discover="/discover";
+  static const script="/script";
 
 
 }
