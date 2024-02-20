@@ -16,7 +16,7 @@ class AppBlocProviders {
     BlocProvider(create: (BuildContext context) => SignInBloc()),
     BlocProvider(create: (BuildContext context) => RegisterBloc()),
     BlocProvider(create: (BuildContext context) => DiscoverBloc()),
-    BlocProvider(create: (BuildContext context) => ScriptBloc()),
+    BlocProvider(create: (BuildContext context) => ScriptGenerationBloc()),
 
   ];
 }

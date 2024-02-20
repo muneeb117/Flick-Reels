@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class reusable_scipt_text extends StatelessWidget {
   const reusable_scipt_text({
     super.key,
@@ -9,10 +10,10 @@ class reusable_scipt_text extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        style:  TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600),
       ),
     );
   }

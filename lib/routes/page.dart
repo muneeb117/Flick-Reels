@@ -89,7 +89,7 @@ class AppPage {
     PageEntity(
       route: AppRoutes.script,
       bloc: BlocProvider(
-        create: (_) => ScriptBloc(),
+        create: (_) => ScriptGenerationBloc(),
       ),
       page:  ScriptGeneratorScreen(),
     ),

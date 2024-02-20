@@ -1,17 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flick_reels/routes/name.dart';
 import 'package:flick_reels/screens/discover/bloc/discover_events.dart';
 import 'package:flick_reels/screens/discover/bloc/discover_state.dart';
 import 'package:flick_reels/screens/discover/widgets/feature_tile_widget.dart';
 import 'package:flick_reels/screens/discover/widgets/discover_page_widgets.dart';
-import 'package:flick_reels/screens/script_generator/script_generation_screen.dart';
-import 'package:flick_reels/screens/teleprompting/src/teleprompter_widget.dart';
 import 'package:flick_reels/utils/app_constraints.dart';
-import 'package:flick_reels/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../models/user.dart';
 import 'bloc/discvoer_bloc.dart';
@@ -146,7 +142,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       iconPath: 'disover_container_4',
                       subtitle: 'Generate script for your short video & Teleprompt.',
                       onTap: () {
-                        Get.to(ScriptGeneratorScreen());
+                        Navigator.pushNamed(context, AppRoutes.script);
+
                       },
                     ),
                   ],

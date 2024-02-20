@@ -1,25 +1,17 @@
-abstract class ScriptState {}
+abstract class ScriptGenerationState {}
 
-class ScriptInitial extends ScriptState {}
+class ScriptGenerationInitial extends ScriptGenerationState {}
 
-class ScriptLoading extends ScriptState {}
+class ScriptGenerationLoading extends ScriptGenerationState {}
 
-class ScriptLoaded extends ScriptState {
+class ScriptGenerationLoaded extends ScriptGenerationState {
   final String script;
-  ScriptLoaded(this.script);
+
+  ScriptGenerationLoaded(this.script);
 }
 
-class ScriptError extends ScriptState {
-  final String message;
-  ScriptError(this.message);
-}
+class ScriptGenerationError extends ScriptGenerationState {
+  final String error; // Ensure this field is defined
 
-class TopicNotEmptyState extends ScriptState {
-  final bool isNotEmpty;
-  TopicNotEmptyState(this.isNotEmpty);
-}
-class ScriptNotEmptyState extends ScriptState {
-  final String scriptText;
-
-  ScriptNotEmptyState(this.scriptText);
+  ScriptGenerationError(this.error); // Ensure this constructor is correct
 }

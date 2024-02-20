@@ -6,8 +6,9 @@ import '../utils/api_constanst.dart';
 class ScriptGeneratorApi {
   ScriptGeneratorApi();
 
-  Future<String> generateScript(String topic) async {
-    String prompt = generatePrompt(topic);
+  // Add parameters for keyPoints and tone
+  Future<String> generateScript(String topic, String  keyPoints, String tone) async {
+    String prompt = generatePrompt(topic, keyPoints, tone);
     try {
       var response = await http.post(
         Uri.parse(ApiConstants.apiUrl),
@@ -31,7 +32,8 @@ class ScriptGeneratorApi {
         String text = data['choices'][0]['text'];
         return text.trim();
       } else {
-        print('Failed to generate script: StatusCode=${response.statusCode}, Body=${response.body}');
+        print(
+            'Failed to generate script: StatusCode=${response.statusCode}, Body=${response.body}');
         return 'Error: Failed to generate script. StatusCode=${response.statusCode}';
       }
     } catch (e) {
@@ -40,7 +42,9 @@ class ScriptGeneratorApi {
     }
   }
 
-  String generatePrompt(String topic) {
-    return "Create a script for a short video introducing the topic '${topic}', starting with a greeting and then explaining the topic in an engaging way.";
+  // Modify this method to include key points and tone
+  String generatePrompt(String topic, String keyPoints, String tone) {
+
+    return "Create a script for a short video on the topic '${topic}'. The script should start with a greeting and then explain the topic in an engaging way. Please include the following key points:\n$keyPoints\nThe tone of the script should be $tone.";
   }
 }

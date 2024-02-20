@@ -1,157 +1,201 @@
+import 'package:flick_reels/screens/script_generator/script_edit_screen.dart';
 import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
+import 'package:flick_reels/screens/script_generator/widgets/reusable_script_container.dart';
 import 'package:flick_reels/screens/script_generator/widgets/reusable_text_widget.dart';
-import 'package:flick_reels/screens/teleprompting/src/teleprompter_widget.dart';
+import 'package:flick_reels/screens/script_generator/widgets/text_with_icon.dart';
+import 'package:flick_reels/utils/toast_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
-import '../../services/api_service.dart';
+import 'package:lottie/lottie.dart';
 import '../../utils/colors.dart';
+import 'bloc/script_bloc.dart';
+import 'bloc/script_events.dart';
+import 'bloc/script_states.dart';
 
-class ScriptGeneratorScreen extends StatefulWidget {
-  const ScriptGeneratorScreen({super.key});
+class ScriptGeneratorScreen extends StatelessWidget {
+  const ScriptGeneratorScreen({Key? key}) : super(key: key);
 
   @override
-  State<ScriptGeneratorScreen> createState() => _ScriptGeneratorScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ScriptGenerationBloc(),
+      child: _ScriptGeneratorView(),
+    );
+  }
 }
 
-class _ScriptGeneratorScreenState extends State<ScriptGeneratorScreen> {
-  final TextEditingController _topicController = TextEditingController();
-  final TextEditingController _scriptController = TextEditingController();
-  bool _isTopicButton = false;
-  bool _isScriptButton = false;
+class _ScriptGeneratorView extends StatefulWidget {
+  @override
+  __ScriptGeneratorViewState createState() => __ScriptGeneratorViewState();
+}
 
+class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
+  final TextEditingController _topicController = TextEditingController();
+  final TextEditingController _keyPointController = TextEditingController();
+  String _selectedTone = '';
+  final List<String> _tones = [
+    'Professional',
+    'Casual',
+    'Serious',
+    'Humorous',
+    'Cheerful'
+  ];
   @override
   void initState() {
     super.initState();
-    _topicController.addListener(() {
-      if (_topicController.text.isNotEmpty && !_isTopicButton) {
-        setState(() {
-          _isTopicButton = true;
-        });
-      } else if (_topicController.text.isEmpty && _isTopicButton) {
-        setState(() {
-          _isTopicButton = false;
-        });
-      }
-    });
-    _scriptController.addListener(() {
-      if (_scriptController.text.isNotEmpty && !_isScriptButton) {
-        setState(() {
-          _isScriptButton = true;
-        });
-      } else if (_scriptController.text.isEmpty && _isScriptButton) {
-        setState(() {
-          _isScriptButton = false;
-        });
-      }
-    });
-  }
 
-  Future<void> generateScript(String topic) async {
-    final scriptGeneratorApi = ScriptGeneratorApi();
-    String script = await scriptGeneratorApi.generateScript(topic);
-    setState(() {
-      _scriptController.text = script;
+    // Add listener to _keyPointController
+    _keyPointController.addListener(() {
+      // Trigger rebuild whenever text changes
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Script Generator'),
-      ),
+      appBar: AppBar(title: const Text('Script Generator')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const reusable_scipt_text(
-                text: 'Topic',
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.strokeColor),
+        child: BlocConsumer<ScriptGenerationBloc, ScriptGenerationState>(
+          listener: (context, state) {
+            if (state is ScriptGenerationLoading) {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => Dialog(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Lottie.asset('assets/json_animation/script_loading.json',
+                          width: 100, height: 100),
+                      const Text("Generating Script..."),
+                    ],
+                  ),
                 ),
-                child: TextFormField(
+              );
+            } else if (state is ScriptGenerationLoaded) {
+              Navigator.pop(context); // Close the loading dialog
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => ScriptEditScreen(script: state.script)));
+            } else if (state is ScriptGenerationError) {
+              Navigator.pop(context);
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const text_with_icon_row(
+                  text: 'Topic',
+                  icon: 'pencil (1)',
+                ),
+                SizedBox(height: 10.h),
+                ReusableScriptContainer(
+                  text: 'Write topic e.g Climate Change',
                   controller: _topicController,
-                  style: const TextStyle(fontSize: 16),
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Topic e.g., Climate Change',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                    suffixIcon: Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Icon(
-                        Icons.text_snippet_outlined,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
+                  maxLines: 3,
+                  child: null,
                 ),
-              ),
-              SizedBox(height: 20.h),
-              buildScriptButton(
-                    () {
-                  _isTopicButton ? generateScript(_topicController.text) : null;
-                },
-                _isTopicButton
-                    ? AppColors.primaryBackground
-                    : AppColors.strokeColor,
-                'Genrate Script',
-                _isTopicButton ? Colors.white : Colors.black,
-              ),
-              const SizedBox(height: 20),
-              const reusable_scipt_text(
-                text: 'Script',
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.strokeColor),
+                SizedBox(height: 20.h),
+                const text_with_icon_row(
+                  text: 'Key Points',
+                  icon: 'right-arrow',
                 ),
-                child: TextField(
-                  controller: _scriptController,
-                  decoration: InputDecoration(
-                    hintText: _isTopicButton
-                        ? 'Generated Script will here.....'
-                        : 'Write Your Script or enter Topic To generate',
-                    border: InputBorder.none,
-                  ),
-                  maxLines: 10,
+                SizedBox(height: 10.h),
+                ReusableScriptContainer(
+                  text: 'Write key Points that you want to include in script',
+                  controller: _keyPointController,
+                  maxLines: 3,
+                  child: _keyPointController.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: () {
+                            _keyPointController.clear();
+                          },
+                          icon: const Icon(
+                            Icons.cancel,
+                            size: 20,
+                            color: AppColors.strokeColor,
+                          ),
+                        )
+                      : null,
                 ),
-              ),
-              const SizedBox(height: 20),
-              buildScriptButton(
-                    () {
-                  _isScriptButton
-                      ? Get.to(TeleprompterWidget(
-                    text: _scriptController.text.toString(),
-                  ))
-                      : null;
-                },
-                _isScriptButton
-                    ? AppColors.primaryBackground
-                    : AppColors.strokeColor,
-                'Teleprompt',
-                _isScriptButton ? Colors.white : Colors.black26,
-              ),
-            ],
-          ),
+                SizedBox(height: 20.h),
+                const reusable_scipt_text(text: 'Select Tone'),
+                buildToneSelection(),
+                SizedBox(height: 40.h),
+                buildScriptButton(
+                  onTap: () {
+                    if (_topicController.text.isNotEmpty) {
+                      BlocProvider.of<ScriptGenerationBloc>(context).add(
+                        GenerateScriptEvent(
+                          topic: _topicController.text,
+                          keyPoints: _keyPointController.text,
+                          tone: _selectedTone,
+                        ),
+                      );
+                    } else {
+                      toastInfo(context: context, msg: 'Please enter a topic.');
+                    }
+                  },
+                  color: AppColors.primaryBackground,
+                  text: 'Generate Script',
+                  labelColor: Colors.white,
+                ),
+                const SizedBox(height: 20),
+              ],
+            );
+          },
         ),
+      ),
+    );
+  }
+
+  Widget buildToneButton(String tone) {
+    bool isSelected = _selectedTone == tone;
+    return Padding(
+      padding: const EdgeInsets.all(5),
+      child: FilterChip(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(
+                color: isSelected
+                    ? AppColors.primaryBackground
+                    : AppColors.strokeColor,
+                width: 1.0)),
+        label: Text(tone),
+        labelStyle: TextStyle(
+          color: isSelected ? Colors.white : Colors.black,
+        ),
+        selected: isSelected,
+        onSelected: (bool selected) {
+          setState(() {
+            _selectedTone = selected ? tone : '';
+          });
+        },
+        backgroundColor:
+            isSelected ? AppColors.primaryBackground : Colors.white,
+        selectedColor: AppColors.primaryBackground,
+        showCheckmark: false,
+        avatarBorder: const CircleBorder(
+          side: BorderSide.none,
+        ),
+      ),
+    );
+  }
+
+  Widget buildToneSelection() {
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _tones.length,
+        itemBuilder: (BuildContext context, int index) {
+          return buildToneButton(_tones[index]);
+        },
       ),
     );
   }
