@@ -37,16 +37,16 @@ class ShareVideo extends GetxController {
                   ),
                 ],
               ),
-              padding: EdgeInsets.all(20),
+              padding:const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 10,),
-
+                  const  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
                     children: [
                       _buildShareOption(
                         context: context,
@@ -56,8 +56,9 @@ class ShareVideo extends GetxController {
                         fileName: "video.mp4",
                         videoId: videoId,
                       ),
-                      SizedBox(width: 5,),
-
+                     const SizedBox(
+                        width: 5,
+                      ),
                       _buildShareOption(
                         context: context,
                         iconPath: "assets/instagram.png",
@@ -66,8 +67,9 @@ class ShareVideo extends GetxController {
                         fileName: "video.mp4",
                         videoId: videoId,
                       ),
-                      SizedBox(width: 5,),
-
+                      const SizedBox(
+                        width: 5,
+                      ),
                       _buildShareOption(
                         context: context,
                         iconPath: "assets/facebook.png",
@@ -76,8 +78,9 @@ class ShareVideo extends GetxController {
                         fileName: "video.mp4",
                         videoId: videoId,
                       ),
-                      SizedBox(width: 5,),
-
+                      const SizedBox(
+                        width: 5,
+                      ),
                       _buildShareOption(
                         context: context,
                         iconPath: "assets/tiktok.png",
@@ -86,21 +89,30 @@ class ShareVideo extends GetxController {
                         fileName: "video.mp4",
                         videoId: videoId,
                       ),
-
                     ],
                   ),
-                  SizedBox(height: 30,),
-
-                  Divider(),
+                  const   SizedBox(
+                    height: 20,
+                  ),
+                  const  Divider(),
                   ListTile(
                     leading: Icon(Icons.report_problem),
-                    title: Text('Report a Problem',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                    title: const Text(
+                      'Report a Problem',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
                     onTap: () => _showReportScreen(context, videoId),
                   ),
                   ListTile(
                     leading: Icon(Icons.save_alt),
-                    title: Text('Save Video',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
-                    onTap: () => downloadAndSaveVideo(context, currentVideoUrl, "video.mp4"),
+                    title:const Text(
+                      'Save Video',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    onTap: () => downloadAndSaveVideo(
+                        context, currentVideoUrl, "video.mp4"),
                   ),
                 ],
               ),
@@ -120,7 +132,8 @@ class ShareVideo extends GetxController {
     required String videoId,
   }) {
     return GestureDetector(
-      onTap: () => _downloadAndShareVideo(context, videoUrl, fileName, title, videoId),
+      onTap: () =>
+          _downloadAndShareVideo(context, videoUrl, fileName, title, videoId),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 8),
         child: Column(
@@ -133,7 +146,6 @@ class ShareVideo extends GetxController {
       ),
     );
   }
-
 
   Future<void> _downloadAndShareVideo(BuildContext context, String videoUrl,
       String fileName, String platform, String videoId) async {
@@ -149,8 +161,8 @@ class ShareVideo extends GetxController {
       Get.back(); // Dismiss the progress dialog
 
       // Share the video file
-      await Share.shareXFiles(
-          [XFile(filePath)], text: 'Check out this video from Flick Reels!');
+      await Share.shareXFiles([XFile(filePath)],
+          text: 'Check out this video from Flick Reels!');
 
       // Update the share count
       _increaseShareCount(videoId);
@@ -161,16 +173,16 @@ class ShareVideo extends GetxController {
     }
   }
 
-  Future<void> downloadAndSaveVideo(BuildContext context, String videoUrl,
-      String fileName) async {
+  Future<void> downloadAndSaveVideo(
+      BuildContext context, String videoUrl, String fileName) async {
     try {
       Get.dialog(const Center(child: CircularProgressIndicator()),
           barrierDismissible: false);
       var tempDir = await getTemporaryDirectory();
       String filePath = '${tempDir.path}/$fileName';
 
-      var response = await dio.download(
-          videoUrl, filePath, onReceiveProgress: (received, total) {
+      var response = await dio.download(videoUrl, filePath,
+          onReceiveProgress: (received, total) {
         if (total != -1) {
           // You can show the download progress here
           print("${(received / total * 100).toStringAsFixed(0)}%");
@@ -189,8 +201,8 @@ class ShareVideo extends GetxController {
         }
       } else {
         Get.back(); // Close loading dialog
-        Get.snackbar(
-            'Error', 'Download failed.', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Error', 'Download failed.',
+            snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       Get.back(); // Ensure the loading dialog is dismissed in case of an error
@@ -199,10 +211,9 @@ class ShareVideo extends GetxController {
     }
   }
 
-
   void _increaseShareCount(String videoId) async {
-    final DocumentReference videoRef = FirebaseFirestore.instance.collection(
-        'videos').doc(videoId);
+    final DocumentReference videoRef =
+        FirebaseFirestore.instance.collection('videos').doc(videoId);
     FirebaseFirestore.instance.runTransaction((Transaction transaction) async {
       DocumentSnapshot videoSnapshot = await transaction.get(videoRef);
       if (videoSnapshot.exists) {
@@ -219,7 +230,6 @@ class ShareVideo extends GetxController {
   void _showReportScreen(BuildContext context, String videoId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => ReportScreen(videoId: videoId)));
-
 
 // Additional methods as needed...
   }

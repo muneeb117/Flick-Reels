@@ -106,7 +106,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 ),
                 SizedBox(height: 10.h),
                 ReusableScriptContainer(
-                  text: 'Write topic e.g Climate Change',
+                  hintText: 'Write topic e.g Climate Change',
                   controller: _topicController,
                   maxLines: 3,
                   child: null,
@@ -118,7 +118,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 ),
                 SizedBox(height: 10.h),
                 ReusableScriptContainer(
-                  text: 'Write key Points that you want to include in script',
+                  hintText: 'Write key Points that you want to include in script',
                   controller: _keyPointController,
                   maxLines: 3,
                   child: _keyPointController.text.isNotEmpty

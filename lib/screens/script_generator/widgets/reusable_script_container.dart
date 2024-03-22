@@ -7,14 +7,14 @@ import '../../../utils/colors.dart';
 class ReusableScriptContainer extends StatelessWidget {
   const ReusableScriptContainer({
     super.key,
-    required this.text,
+    required this.hintText,
     required this.child,
     required this.controller,
     required this.maxLines,
   });
 
   final TextEditingController controller;
-  final String text;
+  final String hintText;
   final Widget? child;
   final int maxLines;
   @override
@@ -30,7 +30,7 @@ class ReusableScriptContainer extends StatelessWidget {
         controller: controller,
         style: const TextStyle(fontSize: 16),
         decoration: InputDecoration(
-          hintText: text,
+          hintText: hintText,
           hintStyle: const TextStyle(color: Colors.grey),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(vertical: 10),

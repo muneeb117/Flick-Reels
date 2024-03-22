@@ -1,9 +1,11 @@
 import 'package:flick_reels/components/reusable_button.dart';
+import 'package:flick_reels/screens/script_generator/widgets/reusable_script_container.dart';
 import 'package:flick_reels/utils/app_constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../models/report_model.dart';
+import '../../../utils/colors.dart';
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen({super.key, required this.videoId});
@@ -24,34 +26,37 @@ class _ReportScreenState extends State<ReportScreen> {
     "Spam or Misleading",
     "Child Abuse",
 
-
     // You can add more reasons specific to your platform's policies
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Report a Problem'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading:   IconButton(onPressed:(){
+          Navigator.of(context).pop();
+        } , icon: Icon(Icons.arrow_back_ios_new,size: 20,)),
+        title:    Text("Report A Problem ?",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+
+      ),
+      backgroundColor: Colors.white,
+        body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Divider(color: AppColors.strokeColor,),
+
               SizedBox(
-                height: 20.h,
-              ),
-              Text(
-                "Why you are Reporting this video?",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 20.h,
+                height: 15.h,
               ),
               ...reportReasons
                   .map((reason) => RadioListTile(
+                      activeColor: AppColors.primaryBackground,
                       title: Text(reason),
                       value: reason,
                       groupValue: selectedReason,
@@ -64,23 +69,25 @@ class _ReportScreenState extends State<ReportScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              TextField(
-                controller: additonalTextController,
-                decoration:
-                    InputDecoration(labelText: "Additional details (optional)"),
-                minLines: 1,
-                maxLines: 5,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
+              ReusableScriptContainer(hintText: 'Give Details (optional)', child: null, controller: additonalTextController, maxLines: 3),
+              // TextField(
+              //   controller: additonalTextController,
+              //   decoration: InputDecoration(
+              //       labelText: "Additional details (optional)",
+              //       border: OutlineInputBorder()),
+              //   minLines: 3,
+              //   maxLines: 10,
+              // ),
+              SizedBox(height: 120.h),
               ReusableButton(
                 text: "Submit Report",
                 onPressed: _submitReport,
               )
             ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 
   Future<void> _submitReport() async {
@@ -92,7 +99,7 @@ class _ReportScreenState extends State<ReportScreen> {
       );
       return;
     }
-    final report= Report(
+    final report = Report(
       reportId: firestore.collection("reports").doc().id,
       videoId: widget.videoId,
       reason: selectedReason!,
@@ -100,10 +107,12 @@ class _ReportScreenState extends State<ReportScreen> {
       reportedByUserId: firebaseAuth.currentUser!.uid,
       additionalDetails: additonalTextController.text.toString(),
     );
-    await firestore.collection("reports").doc(report.reportId).set(report.toJson());
+    await firestore
+        .collection("reports")
+        .doc(report.reportId)
+        .set(report.toJson());
     Navigator.pop(context);
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Thank you for reporting. We will review it shortly.'))
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Thank you for reporting. We will review it shortly.')));
   }
 }

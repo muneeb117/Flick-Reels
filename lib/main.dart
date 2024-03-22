@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               onGenerateRoute: AppPage.generateRouteSettings,
               theme: ThemeData(
-
                 textTheme: customUrbanistTextTheme(ThemeData.light().textTheme),
                 // Define other theme properties as needed
               ));
