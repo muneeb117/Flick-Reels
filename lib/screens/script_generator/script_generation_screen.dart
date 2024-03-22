@@ -55,7 +55,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Script Generator')),
+      appBar: AppBar(title: const Text('Script Generator',style: TextStyle(fontWeight: FontWeight.w600),)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<ScriptGenerationBloc, ScriptGenerationState>(
@@ -65,12 +65,23 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 context: context,
                 barrierDismissible: false,
                 builder: (_) => Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: Colors.white,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Lottie.asset('assets/json_animation/script_loading.json',
-                          width: 100, height: 100),
-                      const Text("Generating Script..."),
+                      SizedBox(
+
+                    width: 250.w, height: 220.h,
+                        child: Lottie.asset('assets/json_animation/script_loading.json',
+                           ),
+                      ),
+                      SizedBox(height: 10.h,),
+                      const Text("Generating Script...",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15),),
+                      SizedBox(height: 40.h,),
+
                     ],
                   ),
                 ),

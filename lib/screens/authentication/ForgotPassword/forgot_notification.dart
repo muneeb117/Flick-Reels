@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import '../../../routes/name.dart';
 import '../../../utils/colors.dart';
 
@@ -48,6 +49,7 @@ class _ForgotNotificationScreenState extends State<ForgotNotificationScreen> {
                   image: AssetImage("assets/email.png"),
                 ),
               ),
+              child: Lottie.asset("assets/json_animation/email_sent.json"),
             ),
             SizedBox(height: 30.h),
             Text(

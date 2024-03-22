@@ -96,19 +96,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
         Padding(
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
-          child: ReusableButton(
-            onPressed: () {
-              if (index < 3) {
-                pageController.animateToPage(index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.decelerate);
-              } else {
-                Global.storageServices.setBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_TIME, true);
-                Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.signInOption, (route) => false);
-              }
-            },
-            text: buttonName,
-          ),
+          // child: ReusableButton(
+          //   onPressed: () {
+          //     if (index < 3) {
+          //       pageController.animateToPage(index,
+          //           duration: const Duration(milliseconds: 500),
+          //           curve: Curves.decelerate);
+          //     } else {
+          //       Global.storageServices.setBool(AppConstants.STORAGE_DEVICE_OPEN_FIRST_TIME, true);
+          //       Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.signInOption, (route) => false);
+          //     }
+          //   },
+          //   text: buttonName,
+          // ),
         ),
       ],
     );

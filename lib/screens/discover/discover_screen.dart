@@ -21,6 +21,7 @@ class DiscoverScreen extends StatefulWidget {
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
   User? currentUserDetails;
+
   @override
   void initState() {
     super.initState();
