@@ -52,8 +52,7 @@ class _TextScrollerComponentState extends State<TextScrollerComponent>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    final TeleprompterState teleprompterState =
-        Provider.of<TeleprompterState>(context, listen: false);
+    final TeleprompterState teleprompterState =     Provider.of<TeleprompterState>(context, listen: false);
 
     final ScrollController scrollController = ScrollController(
         initialScrollOffset: teleprompterState.getScrollPosition());
@@ -111,17 +110,17 @@ class _TextScrollerComponentState extends State<TextScrollerComponent>
                         await teleprompterState.stopRecording();
                     teleprompterState.refresh();
 
-                    if (success && mounted) {
-                      MySnackBar.show(
-                        context: context,
-                        text: widget.savedToGallery,
-                      );
-                    } else if (mounted) {
-                      MySnackBar.showError(
-                        context: context,
-                        text: widget.errorSavingToGallery,
-                      );
-                    }
+                    // if (success && mounted) {
+                    //   MySnackBar.show(
+                    //     context: context,
+                    //     text: widget.savedToGallery,
+                    //   );
+                    // } else if (mounted) {
+                    //   MySnackBar.showError(
+                    //     context: context,
+                    //     text: widget.errorSavingToGallery,
+                    //   );
+                    // }
                   },
                   icon: widget.stopRecordingButton,
                 )

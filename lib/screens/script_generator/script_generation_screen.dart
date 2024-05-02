@@ -1,6 +1,6 @@
 import 'package:flick_reels/screens/script_generator/script_edit_screen.dart';
 import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
-import 'package:flick_reels/screens/script_generator/widgets/reusable_script_container.dart';
+import 'package:flick_reels/components/reusable_script_container.dart';
 import 'package:flick_reels/screens/script_generator/widgets/reusable_text_widget.dart';
 import 'package:flick_reels/screens/script_generator/widgets/text_with_icon.dart';
 import 'package:flick_reels/utils/toast_info.dart';
@@ -55,7 +55,10 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Script Generator',style: TextStyle(fontWeight: FontWeight.w600),)),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+          elevation: 0,
+          title: const Text('Script Generator',style: TextStyle(fontWeight: FontWeight.w600),)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: BlocConsumer<ScriptGenerationBloc, ScriptGenerationState>(
@@ -64,26 +67,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: Colors.white,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-
-                    width: 250.w, height: 220.h,
-                        child: Lottie.asset('assets/json_animation/script_loading.json',
-                           ),
-                      ),
-                      SizedBox(height: 10.h,),
-                      const Text("Generating Script...",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 15),),
-                      SizedBox(height: 40.h,),
-
-                    ],
-                  ),
+                builder: (_)=> Lottie.asset('assets/json_animation/script_loading.json',
                 ),
               );
             } else if (state is ScriptGenerationLoaded) {
@@ -108,7 +92,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 ReusableScriptContainer(
                   hintText: 'Write topic e.g Climate Change',
                   controller: _topicController,
-                  maxLines: 3,
+                  maxLines: 5,
                   child: null,
                 ),
                 SizedBox(height: 20.h),
@@ -120,7 +104,7 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 ReusableScriptContainer(
                   hintText: 'Write key Points that you want to include in script',
                   controller: _keyPointController,
-                  maxLines: 3,
+                  maxLines: 5,
                   child: _keyPointController.text.isNotEmpty
                       ? IconButton(
                           onPressed: () {
@@ -136,9 +120,11 @@ class __ScriptGeneratorViewState extends State<_ScriptGeneratorView> {
                 ),
                 SizedBox(height: 20.h),
                 const reusable_scipt_text(text: 'Select Tone'),
+                SizedBox(height: 10.h),
+
                 buildToneSelection(),
-                SizedBox(height: 40.h),
-                buildScriptButton(
+                SizedBox(height: 120.h),
+                defaultButton(
                   onTap: () {
                     if (_topicController.text.isNotEmpty) {
                       BlocProvider.of<ScriptGenerationBloc>(context).add(

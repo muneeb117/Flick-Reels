@@ -5,6 +5,7 @@ class text_with_icon_row extends StatelessWidget {
     super.key,
     required this.text,
     required this.icon,
+
   });
   final String text;
   final String icon;

@@ -16,7 +16,7 @@ Widget buildPage(index) {
     ShortVideoScreen(),
     DiscoverScreen(),
     VideoPickerScreen(),
-    Center(child: Text("he"),),
+    Center(child: Text("chatbot "),),
    // AdvancedMediaProductionSuite(),
     ProfileScreen(uid: authController.user!.uid,),
   ];

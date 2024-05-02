@@ -1,4 +1,7 @@
+import 'package:flick_reels/screens/profile/profile_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../models/video.dart';
 import 'build_profile.dart';
@@ -24,35 +27,41 @@ class builtUserDetails extends StatelessWidget {
           mainAxisAlignment:
           MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .center,
-              children: [
-                buildProfile(data.userProfileImage),
-                Expanded(
-                  // Use Expanded
-                  child: Text(
-                    data.userName,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap:(){
+                Get.to(ProfileScreen(uid: data.userId));
+
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment
+                    .center,
+                children: [
+                  buildProfile(data.userProfileImage),
+                  Expanded(
+
+                    child: Text(
+                      data.userName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             const SizedBox(
               height: 2,
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 15.0),
+                  left: 8.0),
               child: Text(
                 data.caption,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: 18,
                 ),
               ),
             ),
@@ -64,11 +73,7 @@ class builtUserDetails extends StatelessWidget {
                   left: 8.0),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.music_note,
-                    color: Colors.white,
-                    size: 15,
-                  ),
+
                   Text(
                     data.songName,
                     style: const TextStyle(
@@ -76,7 +81,7 @@ class builtUserDetails extends StatelessWidget {
                       // Handle overflow
 
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../utils/api_constanst.dart';
 
-class ScriptGeneratorApi {
-  ScriptGeneratorApi();
+class VoiceOverScript {
+  // ScriptGeneratorApi();
 
   // Add parameters for keyPoints and tone
-  Future<String> generateScript(String topic, String  keyPoints, String tone) async {
-    String prompt = generatePrompt(topic, keyPoints, tone);
+  Future<String> generateScript(String topic) async {
+    String prompt = generatePrompt(topic);
     try {
       var response = await http.post(
         Uri.parse(ApiConstants.apiUrl),
@@ -43,8 +42,14 @@ class ScriptGeneratorApi {
   }
 
   // Modify this method to include key points and tone
-  String generatePrompt(String topic, String keyPoints, String tone) {
+  String generatePrompt(String topic) {
 
-    return "Create a script for a short video on the topic '${topic}'. The script should start with a greeting and then explain the topic in an engaging way. Please include the following key points:\n$keyPoints\nThe tone of the script should be $tone.";
+    return "Create a voice over script for a short video on the topic '${topic}'. The voice over should start with a warm greeting and then delve into an engaging explanation of the topic, captivating the audience from the start";
   }
+}
+
+
+class ApiConstants {
+  static String apiKey = "sk-proj-m068FOwTwz3F711BLm3AT3BlbkFJtwVBqG3RTNPjOKzVfc67";
+  static String apiUrl = 'https://api.openai.com/v1/completions';
 }

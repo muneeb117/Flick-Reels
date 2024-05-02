@@ -71,15 +71,15 @@ class _VideoPickerScreenState extends State<VideoPickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        leading: SizedBox(),
         title: const Text(
           "Video Picker",style: TextStyle(
-            color: Colors.deepPurple,
-            fontWeight: FontWeight.bold,
-            fontSize: 20),
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 22),
         ),
-        centerTitle: true,
         backgroundColor: Colors.transparent,
+        centerTitle: true,
         elevation: 0,
       ),
       body: SizedBox(

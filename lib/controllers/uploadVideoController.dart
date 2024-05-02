@@ -98,9 +98,9 @@ class UploadVideoController extends GetxController {
 
       // Save video data to Firestore
       await FirebaseFirestore.instance.collection("videos").doc("Video $len").set(video.toJson());
-      Get.snackbar('New Video', 'You Have Successfully Uploaded a New Video');
-      Get.toNamed(AppRoutes.application);
-    } catch (e) {
+      // Get.snackbar('New Video', 'You Have Successfully Uploaded a New Video');
+     Navigator.pushReplacementNamed(context, AppRoutes.application);
+      } catch (e) {
       Get.snackbar('Error', 'Failed to upload video: ${e.toString()}');
     }
   }

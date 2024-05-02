@@ -5,14 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'Controllers/authentication_controller.dart';
 import 'global.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-
   await Global.init();
-
   Get.put(AuthenticationController()); // Instantiating the controller
   runApp(const MyApp());
 }
@@ -29,7 +28,8 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               onGenerateRoute: AppPage.generateRouteSettings,
               theme: ThemeData(
-                textTheme: customUrbanistTextTheme(ThemeData.light().textTheme),
+                scaffoldBackgroundColor: Colors.white,
+                textTheme: GoogleFonts.urbanistTextTheme()
                 // Define other theme properties as needed
               ));
         },

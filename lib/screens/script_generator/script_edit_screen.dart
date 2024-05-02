@@ -1,7 +1,12 @@
+import 'package:flick_reels/components/reusable_button.dart';
+import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
+import 'package:flick_reels/components/reusable_script_container.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utils/colors.dart';
 import '../teleprompting/src/teleprompter_widget.dart';
+
 class ScriptEditScreen extends StatefulWidget {
   final String script;
 
@@ -24,13 +29,24 @@ class _ScriptEditScreenState extends State<ScriptEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Script'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Edit Script',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              _scriptController.clear(); // Clear the script
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.cancel,
+                color: AppColors.containerStroke,
+              ),
+              onPressed: () {
+                _scriptController.clear(); // Clear the script
+              },
+            ),
           ),
         ],
       ),
@@ -39,24 +55,31 @@ class _ScriptEditScreenState extends State<ScriptEditScreen> {
         child: Column(
           children: [
             Expanded(
-              child: TextField(
+
+              child: ReusableScriptContainer(
+                hintText: 'Your Script Here',
                 controller: _scriptController,
-                maxLines: null,
-                expands: true,
-                decoration: InputDecoration(
-                  hintText: 'Your script appears here...',
-                  border: OutlineInputBorder(),
-                ),
+                maxLines: 50,
+                child: null,
               ),
+
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to TeleprompterWidget with the potentially edited script
-                Get.to(() => TeleprompterWidget(text: _scriptController.text));
-              },
-              child: Text('Teleprompt'),
-            ),
+            defaultButton(
+                color: AppColors.primaryBackground,
+                onTap: () {
+                  Get.to(
+                      () => TeleprompterWidget(text: _scriptController.text));
+                },
+                text: 'Teleprompt',
+                labelColor: Colors.white)
+            // ReusableButton(
+            //   onPressed: () {
+            //     // Navigate to TeleprompterWidget with the potentially edited script
+            //     Get.to(() => TeleprompterWidget(text: _scriptController.text));
+            //   },
+            //   text: 'Teleprompt',
+            // ),
           ],
         ),
       ),

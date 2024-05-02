@@ -55,27 +55,6 @@ class _ShortVideoScreenState extends State<ShortVideoScreen> {
                           ),
                         ),
                       ),
-                    // Positioned(
-                    //   top: 16,
-                    //   right: 16,
-                    //   child: Container(
-                    //     padding: EdgeInsets.all(8),
-                    //     decoration: BoxDecoration(
-                    //       border:Border.all(color: Colors.white),
-                    //       borderRadius: BorderRadius.circular(25),
-                    //
-                    //     ),
-                    //     child: IconButton(
-                    //       icon: Icon(Icons.search),
-                    //       onPressed: (){
-                    //          videoController.pauseVideo();
-                    //         Get.to(SearchScreen());
-                    //       },
-                    //        ),
-                    //   ),
-                    // ),
-
-
                     Column(
                       children: [
                          SizedBox(
@@ -87,7 +66,8 @@ class _ShortVideoScreenState extends State<ShortVideoScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 builtUserDetails(data: data),
-                                like_share_comment(size: size, videoController: videoController, data: data, shareVideo: shareVideo)
+                                like_share_comment(size: size, videoController: videoController, data: data, shareVideo: shareVideo),
+
                               ],
                             ))
                       ],

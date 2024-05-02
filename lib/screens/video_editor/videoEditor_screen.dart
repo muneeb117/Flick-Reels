@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flick_reels/screens/Video_Editor/widgets/export_result.dart';
+import 'package:flick_reels/screens/subtitle_generation_screen/preview_selected_video.dart';
 import 'package:flick_reels/screens/video_editor/widgets/continue_button.dart';
 import 'package:flick_reels/screens/video_editor/widgets/export_service.dart';
 import 'package:flutter/material.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 
 import 'package:helpers/helpers.dart' show OpacityTransition;
 import 'package:video_editor/video_editor.dart';
@@ -104,7 +106,6 @@ class _VideoEditorState extends State<VideoEditor> {
       },
     );
   }
-
   void _exportAndDownload() async {
     _exportingProgress.value = 0;
     _isExporting.value = true;
@@ -112,13 +113,13 @@ class _VideoEditorState extends State<VideoEditor> {
     final config = VideoFFmpegVideoEditorConfig(_controller);
     final FFmpegVideoEditorExecute execute = await config.getExecuteConfig();
 
-    _showProgressDialog(context); // Implement this method to show progress dialog
+    _showProgressDialog(context); // Show progress dialog
 
     ExportService.runFFmpegCommand(
       execute,
       onProgress: (stats) {
         _exportingProgress.value = config.getFFmpegProgress(stats.getTime().toInt());
-        // Make sure to call setState if needed or handle progress UI update
+        // Handle progress UI update here
       },
       onError: (e, s) {
         Navigator.pop(context); // Dismiss the progress dialog
@@ -130,18 +131,18 @@ class _VideoEditorState extends State<VideoEditor> {
         _isExporting.value = false;
         if (!mounted) return;
 
-        // Here you can move the file to an external storage directory if needed
-        // For Android 10 and above, you may need to use MediaStore API due to scoped storage
+        // Use GallerySaver to save the video to the gallery
+        final bool? isSaved = await GallerySaver.saveVideo(file.path,);
 
-        // For this example, we're just saving to the app's internal directory, which doesn't require extra permissions
-        final Directory dir = await getApplicationDocumentsDirectory();
-        final String newPath = '${dir.path}/${file.path.split('/').last}';
-        await file.copy(newPath);
-
-        _showSuccessSnackBar("Video saved to: $newPath");
+        if (isSaved == true) {
+          _showSuccessSnackBar("Video saved to Gallery");
+        } else {
+          _showErrorSnackBar("Failed to save video to Gallery");
+        }
       },
     );
   }
+
 
   void _exportCover() async {
     final config = CoverFFmpegVideoEditorConfig(_controller);
@@ -396,7 +397,13 @@ class _VideoEditorState extends State<VideoEditor> {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Navigate to the Video Editor screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => VideoPreviewScreen( videoPath: widget.file.path)),
+                      );
+                    },
                     icon: const Icon(Icons.closed_caption_off_rounded,
                         color: Colors.white),
                     tooltip: 'Close Caption',

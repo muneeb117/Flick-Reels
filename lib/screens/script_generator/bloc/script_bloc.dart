@@ -2,7 +2,7 @@ import 'package:flick_reels/screens/script_generator/bloc/script_events.dart';
 import 'package:flick_reels/screens/script_generator/bloc/script_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../services/api_service.dart';
+import '../../../services/script_api_service.dart';
 
 class ScriptGenerationBloc extends Bloc<ScriptGenerationEvent, ScriptGenerationState> {
   final ScriptGeneratorApi scriptGeneratorApi=ScriptGeneratorApi();

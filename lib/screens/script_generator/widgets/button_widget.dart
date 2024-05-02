@@ -1,37 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-GestureDetector buildScriptButton({Function()? onTap, required final Color color,
-    required final String text, required final Color labelColor}) {
+GestureDetector defaultButton({
+  Function()? onTap,
+  required Color color,
+  required String text,
+  required Color labelColor,
+  IconData? icon, // Optional icon data
+}) {
   return GestureDetector(
     onTap: onTap,
-    // onTap: () {
-
-    // },
     child: Center(
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         height: 45.h,
         width: double.infinity,
         decoration: BoxDecoration(
-
-          gradient: LinearGradient(colors:
-          [
-            color,
-            Colors.purple,
-          ]
-
+          gradient: LinearGradient(
+            colors: [color, Colors.purple],
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-            child: Text(
-          text,
-          style: TextStyle(
-            color: labelColor,
-            fontSize: 16,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) Icon(icon, color: labelColor), // Show icon if it's not null
+              if (icon != null) SizedBox(width: 10.w), // Space between icon and text
+              Text(
+                text,
+                style: TextStyle(
+                  color: labelColor,
+                  fontSize: 16.sp,
+                ),
+              ),
+            ],
           ),
-        )),
+        ),
       ),
     ),
   );

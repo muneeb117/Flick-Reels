@@ -6,11 +6,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../components/loading_indicator.dart';
 import '../../../routes/name.dart';
 import 'package:get/get.dart';
-
 import '../widgets/divider.dart';
 import '../widgets/row_field.dart';
 import '../widgets/third_party_plugins.dart';
@@ -22,13 +20,15 @@ class SignInOptionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Obx(() {
-          if (loadingController.isLoading.value) {
-            // Show loading indicator when loading is true
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return Column(
+      body: Obx(() {
+        if (loadingController.isLoading.value) {
+          return const Center(child: CircularProgressIndicator(
+            backgroundColor: Colors.yellowAccent,
+            color: AppColors.primaryBackground,
+          ));
+        } else {
+          return SingleChildScrollView(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
@@ -125,10 +125,10 @@ class SignInOptionScreen extends StatelessWidget {
                 ),
 
               ],
-            );
-          }
-        }),
-      ),
+            ),
+          );
+        }
+      }),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flick_reels/components/reusable_button.dart';
-import 'package:flick_reels/screens/script_generator/widgets/reusable_script_container.dart';
+import 'package:flick_reels/components/reusable_script_container.dart';
 import 'package:flick_reels/utils/app_constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

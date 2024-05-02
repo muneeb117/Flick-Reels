@@ -14,6 +14,7 @@ class AppRoutes{
   static const search="/search";
   static const discover="/discover";
   static const script="/script";
+  static const voiceOver="/voiceOver";
 
 
 }

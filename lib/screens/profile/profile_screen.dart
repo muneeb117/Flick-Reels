@@ -34,7 +34,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (controller) {
           if (controller.users.isEmpty) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.yellow,
+                color: AppColors.primaryBackground,
+              ),
             );
           }
           return SafeArea(
@@ -42,14 +45,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(kToolbarHeight), // Standard AppBar height
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0), // Add your desired padding here
+                    padding: EdgeInsets.only(left: 10.0,right: 20), // Add your desired padding here
                     child: AppBar(
                       backgroundColor: Colors.transparent,
                       elevation: 0,
-                      leading: Icon(
-                        Icons.person_add_alt_1_outlined,
-                        color: Colors.black,
-                      ),
+                      // leading: Icon(
+                      //   Icons.person_add_alt_1_outlined,
+                      //   color: Colors.black,
+                      // ),
                       actions: [
                         GestureDetector(
                           onTap: (){

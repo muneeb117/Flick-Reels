@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flick_reels/routes/name.dart';
+import 'package:flick_reels/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -56,13 +57,13 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     return Stack(children: [
       GestureDetector(
         onTap: () {
-          if (_isVideoInitialized) {
-            setState(() {
-              playerController.value.isPlaying
-                  ? playerController.pause()
-                  : playerController.play();
-            });
-          }
+          setState(() {
+            if (playerController.value.isPlaying) {
+              playerController.pause();
+            } else {
+              playerController.play();
+            }
+          });
         },
         child: Container(
           color: Colors.black,
@@ -93,8 +94,11 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
                   left: 0,
                   right: 0,
                   child: LinearProgressIndicator(
-                    backgroundColor: Colors.black,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    minHeight:
+                        1.5, // Adjust the height of the progress indicator
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryBackground),
                   ),
                 ),
             ],

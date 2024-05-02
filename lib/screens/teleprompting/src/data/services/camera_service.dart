@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
-import 'package:gallery_saver/gallery_saver.dart';
+import 'package:flick_reels/screens/video_editor/videoEditor_screen.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../../shared/app_logger.dart';
 import '../state/teleprompter_state.dart';
 import 'cameraService/camera_dectector.dart';
+import 'package:get/get.dart';
 
 class CameraService extends CameraDetector {
   static final CameraService _singleton = CameraService._internal();
@@ -45,10 +49,12 @@ class CameraService extends CameraDetector {
 
     try {
       final XFile file = await cameraController!.stopVideoRecording();
-      final bool? success = await GallerySaver.saveVideo(file.path);
-      if (success == true) {
-        return true;
-      }
+
+      Get.to(() => VideoEditor(file: File(file.path)));
+      // final bool? success = await GallerySaver.saveVideo(file.path);
+      // if (success == true) {
+      //   return true;
+      // }
     } catch (e) {
       AppLogger().error('Error stopping recording or saving to gallery: $e');
     }

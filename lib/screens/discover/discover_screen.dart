@@ -5,9 +5,12 @@ import 'package:flick_reels/screens/discover/bloc/discover_events.dart';
 import 'package:flick_reels/screens/discover/bloc/discover_state.dart';
 import 'package:flick_reels/screens/discover/widgets/feature_tile_widget.dart';
 import 'package:flick_reels/screens/discover/widgets/discover_page_widgets.dart';
+import 'package:flick_reels/screens/profile/profile_screen.dart';
+import 'package:flick_reels/screens/subtitle_generation_screen/video_upload.dart';
 import 'package:flick_reels/utils/app_constraints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 import '../../models/user.dart';
 import 'bloc/discvoer_bloc.dart';
@@ -45,9 +48,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final PickVideo pickVideo=PickVideo();
     return BlocBuilder<DiscoverBloc, DiscoverStates>(builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           title: const Padding(
             padding: EdgeInsets.only(
               left: 10.0,
@@ -55,7 +60,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             child: Text(
               "Flick Reels",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w600,
                 fontSize: 23,
                 color: Colors.black,
               ),
@@ -65,9 +70,14 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             if (currentUserDetails != null)
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
-                child: CircleAvatar(
-                  backgroundImage:
-                      CachedNetworkImageProvider(currentUserDetails!.image),
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(ProfileScreen(uid: authController.user!.uid));
+                  },
+                  child: CircleAvatar(
+                    backgroundImage:
+                        CachedNetworkImageProvider(currentUserDetails!.image),
+                  ),
                 ),
               ),
           ],
@@ -82,13 +92,14 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 child: PageView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 3,
+
                     onPageChanged: (index) {
                       state.page = index;
                       BlocProvider.of<DiscoverBloc>(context)
                           .add(DiscoverEvents());
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return buildContainer(
+                      return buildContainerPage(
                         image: data[index]['image'],
                       );
                     }),
@@ -118,7 +129,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       title: 'Voice\nOver',
                       iconPath: 'disover_container_2',
                       subtitle: 'Generate natural voiceovers with AI.',
-                      onTap: () {},
+                      onTap: () {
+
+                        Navigator.pushNamed(context, AppRoutes.voiceOver);
+
+                      },
                     ),
                   ],
                 ),
@@ -136,7 +151,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       title: 'Generate Subtitle',
                       iconPath: 'disover_container_3',
                       subtitle: 'Create subtitles for your content with AI.',
-                      onTap: () {},
+                      onTap: () {
+                        pickVideo.pickAndUploadVideo(context);
+
+                      },
                     ),
                     FeatureTile(
                       title: 'Script & Teleprompt',

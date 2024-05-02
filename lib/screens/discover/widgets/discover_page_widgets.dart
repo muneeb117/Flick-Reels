@@ -9,8 +9,8 @@ List<Map<String, String>> data = [
 ];
 
 
-class buildContainer extends StatelessWidget {
-  const buildContainer({
+class buildContainerPage extends StatelessWidget {
+  const buildContainerPage({
     super.key, required this.image,
   });
   final String? image;

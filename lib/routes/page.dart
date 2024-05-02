@@ -10,6 +10,7 @@ import 'package:flick_reels/screens/script_generator/script_generation_screen.da
 import 'package:flick_reels/screens/search/search_screen.dart';
 import 'package:flick_reels/screens/splash_screen/bloc/splash_bloc.dart';
 import 'package:flick_reels/screens/splash_screen/splash_screen.dart';
+import 'package:flick_reels/screens/voice_over/voice_over.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,6 +93,10 @@ class AppPage {
         create: (_) => ScriptGenerationBloc(),
       ),
       page:  ScriptGeneratorScreen(),
+    ),
+    PageEntity(
+      route: AppRoutes.voiceOver,
+      page:  VoiceOver(),
     ),
 
   ];
