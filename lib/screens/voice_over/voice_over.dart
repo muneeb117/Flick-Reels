@@ -74,7 +74,7 @@ class _VoiceOverState extends State<VoiceOver> {
                         });
                       },
                 icon: _isLoading
-                    ? SizedBox(
+                    ? const SizedBox(
                         height: 22,
                         width: 22,
                         child: CircularProgressIndicator(
@@ -188,7 +188,9 @@ class _VoiceOverState extends State<VoiceOver> {
                       backgroundColor: voice.backgroundColor,
                     ),
                     SizedBox(height: 5),
-                    Text(voice.name, style: TextStyle(fontSize: 12))
+                    Text(voice.name,
+                        style: TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w600))
                   ],
                 ),
               );
@@ -216,7 +218,15 @@ class _VoiceOverState extends State<VoiceOver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('AI-Assisted Voice-Over Creation')),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        title: const Text(
+          'Voice Over',
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,11 +259,13 @@ class _VoiceOverState extends State<VoiceOver> {
             ),
             _isAIGenerated ? _buildScriptGenerator() : _buildManualTextEntry(),
             SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: buildVoiceSelector(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
+
             defaultButton(
               onTap: _openTemplateSelection,
               color: AppColors.primaryBackground,

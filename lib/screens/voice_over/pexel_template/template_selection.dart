@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
 import 'package:flick_reels/screens/voice_over/pexel_template/video_template_item.dart';
 import 'package:flutter/material.dart';
 import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
@@ -208,14 +209,14 @@ class _TemplateSelectionState extends State<TemplateSelection> {
                 height: 5.h,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: ReusableButton(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: defaultButton(
                   text: 'Continue with Selected Template',
-                  onPressed: _processSelection,
+                  onTap: _processSelection, color: AppColors.primaryBackground, labelColor: Colors.white,
                 ),
               ),
               SizedBox(
-                height: 5.h,
+                height: 10.h,
               ),
             ],
           ),
@@ -223,7 +224,12 @@ class _TemplateSelectionState extends State<TemplateSelection> {
               ? Container(
                   color: Colors.black.withOpacity(0.5),
                   child: const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.transparent,
+                      color: Colors.white,
+                      strokeWidth: 5.0,
+
+                    ),
                   ),
                 )
               : Container()
