@@ -18,19 +18,6 @@ List<VoiceData> voices = [
   // Female Voices
 
 
-  VoiceData(
-    voiceId: 'en-GB-Standard-A',
-    name: 'Daisy',
-    avatarImage: AssetImage('assets/voice_images/female4.png'),
-    backgroundColor: Colors.blue.shade100,
-  ),
-  VoiceData(
-    voiceId: 'en-GB-Standard-C',
-    name: 'Eva',
-    avatarImage: AssetImage('assets/voice_images/female5.png'),
-    backgroundColor: Colors.green.shade100,
-  ),
-
 
   // Male Voices
   VoiceData(
@@ -84,7 +71,7 @@ List<VoiceData> voices = [
   ),
   VoiceData(
     voiceId: 'pa-IN-Standard-C',
-    name: 'Fiona',
+    name: 'Gurjeet',
     avatarImage: AssetImage('assets/voice_images/female6.png'),
     backgroundColor: Colors.red.shade100,
   ),
@@ -107,6 +94,13 @@ List<VoiceData> voices = [
     backgroundColor: Colors.amber.shade100,
   ),
   VoiceData(
+    voiceId: 'en-GB-Standard-C',
+    name: 'Eva',
+    avatarImage: AssetImage('assets/voice_images/female5.png'),
+    backgroundColor: Colors.green.shade100,
+  ),
+
+  VoiceData(
     voiceId: 'en-US-Standard-J',
     name: 'Patrick',
     avatarImage: AssetImage('assets/voice_images/male10.png'),
@@ -118,6 +112,14 @@ List<VoiceData> voices = [
     avatarImage: AssetImage('assets/voice_images/male11.png'),
     backgroundColor: Colors.brown.shade100,
   ),
+
+  VoiceData(
+    voiceId: 'en-GB-Standard-A',
+    name: 'Daisy',
+    avatarImage: AssetImage('assets/voice_images/female4.png'),
+    backgroundColor: Colors.blue.shade100,
+  ),
+
   VoiceData(
     voiceId: 'ar-XA-Standard-B',
     name: 'Ryan',

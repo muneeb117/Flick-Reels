@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flick_reels/screens/Video_Editor/widgets/export_result.dart';
+import 'package:flick_reels/screens/audio_enhancemnet/audio_enhancement_screen.dart';
 import 'package:flick_reels/screens/subtitle_generation_screen/preview_selected_video.dart';
 import 'package:flick_reels/screens/video_editor/widgets/continue_button.dart';
 import 'package:flick_reels/screens/video_editor/widgets/export_service.dart';
@@ -12,12 +13,23 @@ import '../upload_video/confirm_video_screen.dart';
 import 'crop.dart';
 import 'package:path_provider/path_provider.dart';
 
-
-
 class VideoEditor extends StatefulWidget {
-  const VideoEditor({super.key, required this.file});
+  const VideoEditor({
+    super.key,
+    required this.file,
+    this.withoutSubtitlePath,
+    this.noisyAudioPath,
+    this.subtitleGenerated = false,
+    this.audioEnhanced = false,
+  });
 
   final File file;
+  final File? withoutSubtitlePath;
+  final File? noisyAudioPath;
+
+  final bool subtitleGenerated;
+
+  final bool audioEnhanced;
 
   @override
   State<VideoEditor> createState() => _VideoEditorState();
@@ -27,7 +39,7 @@ class _VideoEditorState extends State<VideoEditor> {
   final _exportingProgress = ValueNotifier<double>(0.0);
   final _isExporting = ValueNotifier<bool>(false);
   final double height = 60;
-  bool _isProgressDialogShowing=false;
+  bool _isProgressDialogShowing = false;
   late final VideoEditorController _controller = VideoEditorController.file(
     widget.file,
     minDuration: const Duration(seconds: 1),
@@ -54,15 +66,18 @@ class _VideoEditorState extends State<VideoEditor> {
     ExportService.dispose();
     super.dispose();
   }
+
   void _showSuccessSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         duration: const Duration(seconds: 3),
-        backgroundColor: Colors.green, // Optional: Change the background color to indicate success
+        backgroundColor: Colors
+            .green, // Optional: Change the background color to indicate success
       ),
     );
   }
+
   void _showErrorSnackBar(String message) =>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -85,7 +100,8 @@ class _VideoEditorState extends State<VideoEditor> {
       execute,
       onProgress: (stats) {
         double progress = config.getFFmpegProgress(stats.getTime().toInt());
-        _exportingProgress.value = progress.clamp(0.0, 1.0); // Ensure progress is between 0 and 1
+        _exportingProgress.value =
+            progress.clamp(0.0, 1.0); // Ensure progress is between 0 and 1
         // If you need to update the UI (e.g., a progress bar), call setState here
       },
       onError: (e, s) {
@@ -100,12 +116,14 @@ class _VideoEditorState extends State<VideoEditor> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ConfirmVideoScreen(videoFile: file, videoPath: file.path),
+            builder: (context) =>
+                ConfirmVideoScreen(videoFile: file, videoPath: file.path),
           ),
         );
       },
     );
   }
+
   void _exportAndDownload() async {
     _exportingProgress.value = 0;
     _isExporting.value = true;
@@ -118,7 +136,8 @@ class _VideoEditorState extends State<VideoEditor> {
     ExportService.runFFmpegCommand(
       execute,
       onProgress: (stats) {
-        _exportingProgress.value = config.getFFmpegProgress(stats.getTime().toInt());
+        _exportingProgress.value =
+            config.getFFmpegProgress(stats.getTime().toInt());
         // Handle progress UI update here
       },
       onError: (e, s) {
@@ -132,7 +151,9 @@ class _VideoEditorState extends State<VideoEditor> {
         if (!mounted) return;
 
         // Use GallerySaver to save the video to the gallery
-        final bool? isSaved = await GallerySaver.saveVideo(file.path,);
+        final bool? isSaved = await GallerySaver.saveVideo(
+          file.path,
+        );
 
         if (isSaved == true) {
           _showSuccessSnackBar("Video saved to Gallery");
@@ -142,7 +163,6 @@ class _VideoEditorState extends State<VideoEditor> {
       },
     );
   }
-
 
   void _exportCover() async {
     final config = CoverFFmpegVideoEditorConfig(_controller);
@@ -165,6 +185,7 @@ class _VideoEditorState extends State<VideoEditor> {
       },
     );
   }
+
   void _showProgressDialog(BuildContext context) {
     if (!_isProgressDialogShowing) {
       showDialog(
@@ -175,12 +196,13 @@ class _VideoEditorState extends State<VideoEditor> {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const    CircularProgressIndicator(),
-                const    SizedBox(height: 20),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 20),
                 ValueListenableBuilder<double>(
                   valueListenable: _exportingProgress,
                   builder: (context, value, child) {
-                    return Text('${(value * 100).toStringAsFixed(0)}% Completed');
+                    return Text(
+                        '${(value * 100).toStringAsFixed(0)}% Completed');
                   },
                 ),
               ],
@@ -191,13 +213,13 @@ class _VideoEditorState extends State<VideoEditor> {
       _isProgressDialogShowing = true;
     }
   }
+
   void _closeProgressDialog() {
     if (_isProgressDialogShowing) {
       Navigator.pop(context); // Dismiss the progress dialog
       _isProgressDialogShowing = false;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +242,7 @@ class _VideoEditorState extends State<VideoEditor> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                icon:const Icon(
+                                icon: const Icon(
                                   Icons.arrow_back,
                                   color: Colors.white,
                                 ),
@@ -230,7 +252,7 @@ class _VideoEditorState extends State<VideoEditor> {
                             ],
                           ),
                         ),
-                      const  SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Expanded(
@@ -281,9 +303,9 @@ class _VideoEditorState extends State<VideoEditor> {
                                   margin: const EdgeInsets.only(top: 10),
                                   child: Column(
                                     children: [
-                                     const SizedBox(
+                                      const SizedBox(
                                         height: 40,
-                                        child:  TabBar(
+                                        child: TabBar(
                                           indicatorColor: Colors.white,
                                           dividerColor: Colors.transparent,
                                           indicatorPadding: EdgeInsets.only(
@@ -382,7 +404,6 @@ class _VideoEditorState extends State<VideoEditor> {
     );
   }
 
-
   Widget bottomNavbar() {
     return SafeArea(
       child: SizedBox(
@@ -401,7 +422,9 @@ class _VideoEditorState extends State<VideoEditor> {
                       // Navigate to the Video Editor screen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => VideoPreviewScreen( videoPath: widget.file.path)),
+                        MaterialPageRoute(
+                            builder: (context) => VideoPreviewScreen(
+                                videoPath: widget.file.path)),
                       );
                     },
                     icon: const Icon(Icons.closed_caption_off_rounded,
@@ -423,7 +446,7 @@ class _VideoEditorState extends State<VideoEditor> {
                     icon: const Icon(Icons.rotate_left, color: Colors.white),
                     tooltip: 'Rotate unclockwise',
                   ),
-                  const     Text('Left', style: TextStyle(color: Colors.white))
+                  const Text('Left', style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
@@ -438,7 +461,7 @@ class _VideoEditorState extends State<VideoEditor> {
                     icon: const Icon(Icons.rotate_right, color: Colors.white),
                     tooltip: 'Rotate clockwise',
                   ),
-                  const      Text('Right', style: TextStyle(color: Colors.white))
+                  const Text('Right', style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
@@ -451,14 +474,13 @@ class _VideoEditorState extends State<VideoEditor> {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (context) =>
-                            CropPage(controller: _controller),
+                        builder: (context) => CropPage(controller: _controller),
                       ),
                     ),
-                    icon:  const Icon(Icons.crop, color: Colors.white),
+                    icon: const Icon(Icons.crop, color: Colors.white),
                     tooltip: 'Open crop screen',
                   ),
-                  const   Text('Crop', style: TextStyle(color: Colors.white))
+                  const Text('Crop', style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
@@ -471,7 +493,15 @@ class _VideoEditorState extends State<VideoEditor> {
                   SizedBox(
                     height: 35, // Adjust this height as needed
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AudioEnhancementScreen(
+                                videoPath: widget.file.path.toString()),
+                          ),
+                        );
+                      },
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
@@ -523,7 +553,7 @@ class _VideoEditorState extends State<VideoEditor> {
                       ),
                     ],
                   ),
-                  const   Text('Save', style: TextStyle(color: Colors.white))
+                  const Text('Save', style: TextStyle(color: Colors.white))
                 ],
               ),
             ),
@@ -552,15 +582,20 @@ class _VideoEditorState extends State<VideoEditor> {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: height / 4),
             child: Row(children: [
-              Text(formatter(Duration(seconds: pos.toInt())),style:const TextStyle(color: Colors.white)),
+              Text(formatter(Duration(seconds: pos.toInt())),
+                  style: const TextStyle(color: Colors.white)),
               const Expanded(child: SizedBox()),
               AnimatedOpacity(
                 opacity: _controller.isTrimming ? 1 : 0,
                 duration: kThemeAnimationDuration,
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Text(formatter(_controller.startTrim),style:const TextStyle(color: Colors.white),),
+                  Text(
+                    formatter(_controller.startTrim),
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   const SizedBox(width: 10),
-                  Text(formatter(_controller.endTrim),style: const TextStyle(color: Colors.white)),
+                  Text(formatter(_controller.endTrim),
+                      style: const TextStyle(color: Colors.white)),
                 ]),
               ),
             ]),
@@ -575,9 +610,7 @@ class _VideoEditorState extends State<VideoEditor> {
           height: height,
           horizontalMargin: height / 4,
           child: TrimTimeline(
-            textStyle: const TextStyle(
-           color: Colors.white),
-
+            textStyle: const TextStyle(color: Colors.white),
             controller: _controller,
             padding: const EdgeInsets.only(top: 10),
           ),

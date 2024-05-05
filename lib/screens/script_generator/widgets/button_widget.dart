@@ -6,7 +6,9 @@ GestureDetector defaultButton({
   required Color color,
   required String text,
   required Color labelColor,
-  IconData? icon, // Optional icon data
+  bool isSelected = false,  // To indicate if the template is selected
+  IconData? icon,  // Optional icon
+
 }) {
   return GestureDetector(
     onTap: onTap,
@@ -28,6 +30,7 @@ GestureDetector defaultButton({
               if (icon != null) Icon(icon, color: labelColor), // Show icon if it's not null
               if (icon != null) SizedBox(width: 10.w), // Space between icon and text
               Text(
+                isSelected?'Template Selected':
                 text,
                 style: TextStyle(
                   color: labelColor,

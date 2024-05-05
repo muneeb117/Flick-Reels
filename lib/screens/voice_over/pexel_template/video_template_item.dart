@@ -99,7 +99,10 @@ class _VideoTemplateItemState extends State<VideoTemplateItem> {
                         Image.network(widget.thumbnailUrl, fit: BoxFit.cover)),
           ),
           if (_isBuffering) // Only show the CircularProgressIndicator when buffering
-            CircularProgressIndicator(),
+          const  CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
           IconButton(
             icon: Icon(
               _controller != null && _controller!.value.isPlaying

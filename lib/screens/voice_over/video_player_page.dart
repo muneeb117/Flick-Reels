@@ -4,9 +4,8 @@ import 'dart:io';
 
 class VideoPlayPage extends StatefulWidget {
   final String videoPath;
-  final String subtitleText;
 
-  VideoPlayPage({required this.videoPath, required this.subtitleText});
+  VideoPlayPage({required this.videoPath});
 
   @override
   _VideoPlayPageState createState() => _VideoPlayPageState();
@@ -52,15 +51,7 @@ class _VideoPlayPageState extends State<VideoPlayPage> {
               aspectRatio: _videoPlayerController!.value.aspectRatio,
               child: VideoPlayer(_videoPlayerController!),
             ),
-            Container(
-              color: Colors.black54,
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                widget.subtitleText,
-                style: TextStyle(color: Colors.white, fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            )
+
           ],
         ),
       ),

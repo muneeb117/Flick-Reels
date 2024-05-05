@@ -19,7 +19,7 @@ class ScriptGeneratorApi {
         body: jsonEncode({
           'model': 'gpt-3.5-turbo-instruct',
           'prompt': prompt,
-          'max_tokens': 500,
+          'max_tokens': 200,
           'temperature': 0.7,
           'top_p': 1,
           'frequency_penalty': 0.0,
@@ -45,6 +45,6 @@ class ScriptGeneratorApi {
   // Modify this method to include key points and tone
   String generatePrompt(String topic, String keyPoints, String tone) {
 
-    return "Create a script for a short video on the topic '${topic}'. The script should start with a greeting and then explain the topic in an engaging way. Please include the following key points:\n$keyPoints\nThe tone of the script should be $tone. and not more 3 lines";
+    return "Provide an informative and engaging explanation about the topic '${topic}'. The topic should start with a greeting and then explain the topic in an engaging way. Please include the following key points:\n$keyPoints\nThe tone of the details should be $tone";
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flick_reels/routes/name.dart';
@@ -13,6 +15,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../models/user.dart';
+import '../audio.dart';
+import '../audio_enhancemnet/audio_enhancement_screen.dart';
+import '../audio_enhancemnet/widgets/upload_noisy_video.dart';
 import 'bloc/discvoer_bloc.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -24,11 +29,31 @@ class DiscoverScreen extends StatefulWidget {
 
 class _DiscoverScreenState extends State<DiscoverScreen> {
   User? currentUserDetails;
+  final PageController _pageController = PageController();
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
+    startAutoScroll();
+
     fetchUserDetails();
+  }
+
+  void startAutoScroll() {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      if (_pageController.hasClients) {
+        int nextPage = _pageController.page!.round() + 1;
+        if (nextPage >= 3) {
+          nextPage = 0; // Go to the first page if it's the last page
+        }
+        _pageController.animateToPage(
+          nextPage,
+          duration: Duration(milliseconds: 1200),
+          curve: Curves.easeOutQuad,
+        );
+      }
+    });
   }
 
   Future<void> fetchUserDetails() async {
@@ -47,8 +72,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   @override
+  void dispose() {
+    _timer?.cancel();
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final PickVideo pickVideo=PickVideo();
+    final PickVideo pickVideo = PickVideo();
+    final NoisyVideo noisyVideo = NoisyVideo();
     return BlocBuilder<DiscoverBloc, DiscoverStates>(builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
@@ -71,7 +104,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               Padding(
                 padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.to(ProfileScreen(uid: authController.user!.uid));
                   },
                   child: CircleAvatar(
@@ -90,9 +123,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 width: double.infinity,
                 height: 200,
                 child: PageView.builder(
+                    controller: _pageController,
                     scrollDirection: Axis.horizontal,
                     itemCount: 3,
-
                     onPageChanged: (index) {
                       state.page = index;
                       BlocProvider.of<DiscoverBloc>(context)
@@ -123,16 +156,24 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       title: 'Audio Enhance',
                       iconPath: 'disover_container_1',
                       subtitle: 'Enhanced Your Audio of Videos With AI.',
-                      onTap: () {},
+                      onTap: () {
+                        noisyVideo.pickAndUploadVideo(context);
+
+                      }
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) =>
+                    //                 AudioEnhancementScreen()));
+                    //   },
+                    // ),
                     ),
                     FeatureTile(
                       title: 'Voice\nOver',
                       iconPath: 'disover_container_2',
                       subtitle: 'Generate natural voiceovers with AI.',
                       onTap: () {
-
                         Navigator.pushNamed(context, AppRoutes.voiceOver);
-
                       },
                     ),
                   ],
@@ -153,16 +194,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       subtitle: 'Create subtitles for your content with AI.',
                       onTap: () {
                         pickVideo.pickAndUploadVideo(context);
-
                       },
                     ),
                     FeatureTile(
                       title: 'Script & Teleprompt',
                       iconPath: 'disover_container_4',
-                      subtitle: 'Generate script for your short video & Teleprompt.',
+                      subtitle:
+                          'Generate script for your short video & Teleprompt.',
                       onTap: () {
                         Navigator.pushNamed(context, AppRoutes.script);
-
                       },
                     ),
                   ],

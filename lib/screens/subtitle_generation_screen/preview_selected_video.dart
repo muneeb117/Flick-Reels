@@ -116,7 +116,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon:const Icon(
             Icons.arrow_back,
             color: Colors.white,
             size: 18,
@@ -148,8 +148,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                                 alignment: Alignment.bottomCenter,
                                 // Align stack contents to bottom center
                                 children: [
-                                  VideoPlayer(
-                                      _controller), // The video player itself
+                                  VideoPlayer(_controller), // The video player itself
                                   _buildPlayPauseOverlay(), // Play/Pause overlay
                                   _buildVideoProgressIndicator(), // Video progress indicator
                                 ],
@@ -232,7 +231,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                               }
                             : null, // Disable the button if no language is selected
                         text: 'Add Captions',
-                        color: AppColors.primaryBackground,
+                        color: Colors.blue,
                         labelColor: Colors.white,
                       ),
                     ],
@@ -315,7 +314,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         child: Center(
           child: _isPlaying
               ? null
-              : Icon(Icons.play_arrow_rounded, size: 64, color: Colors.white70),
+              : Icon(Icons.play_arrow_rounded, size: 45, color: Colors.white70),
         ),
       ),
     );

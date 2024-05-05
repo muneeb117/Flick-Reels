@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flick_reels/components/gradient_text.dart';
 import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
@@ -14,6 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../components/reusable_script_container.dart';
 import '../../services/voice_over_utlility.dart';
 import '../../utils/colors.dart';
+import '../Video_Editor/videoEditor_screen.dart';
 
 class VoiceOver extends StatefulWidget {
   const VoiceOver({super.key});
@@ -54,7 +57,7 @@ class _VoiceOverState extends State<VoiceOver> {
                   hintText: 'Enter topic for AI-generated script',
                   controller: _topicController,
                   child: null,
-                  maxLines: 1,
+                  maxLines: 2,
                 ),
               ),
               SizedBox(width: 5.w),
@@ -155,8 +158,7 @@ class _VoiceOverState extends State<VoiceOver> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => VideoPlayPage(
-                videoPath: outputVideoPath, subtitleText: textToConvert)));
+            builder: (context) => VideoEditor(file: File(outputVideoPath))));
   }
 
   Widget buildVoiceSelector() {
@@ -258,19 +260,21 @@ class _VoiceOverState extends State<VoiceOver> {
               ),
             ),
             _isAIGenerated ? _buildScriptGenerator() : _buildManualTextEntry(),
-            SizedBox(height: 20),
-
+            SizedBox(height: 40),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: buildVoiceSelector(),
             ),
-            SizedBox(height: 40),
-
+            SizedBox(height: 100),
             defaultButton(
               onTap: _openTemplateSelection,
               color: AppColors.primaryBackground,
               text: 'Select Template',
               labelColor: Colors.white,
+              isSelected: _selectedVideoPath != null, // Indicate selection
+              icon: _selectedVideoPath != null
+                  ? Icons.check_circle_rounded
+                  : null, // Show check icon if selected
             ),
             SizedBox(height: 20),
             defaultButton(

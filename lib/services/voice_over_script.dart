@@ -18,7 +18,7 @@ class VoiceOverScript {
         body: jsonEncode({
           'model': 'gpt-3.5-turbo-instruct',
           'prompt': prompt,
-          'max_tokens': 500,
+          'max_tokens': 200,
           'temperature': 0.7,
           'top_p': 1,
           'frequency_penalty': 0.0,
@@ -44,7 +44,7 @@ class VoiceOverScript {
   // Modify this method to include key points and tone
   String generatePrompt(String topic) {
 
-    return "Create a voice over script for a short video on the topic '${topic}'. The voice over should start with a warm greeting and then delve into an engaging explanation of the topic, captivating the audience from the start";
+    return "Provide an informative and engaging explanation about the topic '${topic}'. Avoid any video or camera instructions, just focus on the subject matter itself.";
   }
 }
 
