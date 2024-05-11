@@ -100,9 +100,11 @@ class _AudioEnhancementScreenState extends State<AudioEnhancementScreen> {
   }
 
   void _disposeVideoController() {
-    _videoController?.pause();
-    _videoController?.dispose();
-    _videoController = null;
+    if (_videoController != null) {
+      _videoController!.pause(); // Pause the video
+      _videoController!.dispose(); // Dispose the controller
+      _videoController = null; // Set the controller to null
+    }
   }
 
   @override
@@ -127,9 +129,11 @@ class _AudioEnhancementScreenState extends State<AudioEnhancementScreen> {
             child: TextButton(
 
               onPressed: () {
+                _disposeVideoController();
+
+
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => VideoEditor( file: File(_enhancedVideoPath!),)));
-
 
               },
               child: GradientText(

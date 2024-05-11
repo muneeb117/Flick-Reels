@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "flick-reels",
+  "private_key_id": "60899fcd64181cf2905c4638d07ad3b0755dde41",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDlbsFibnmjhfNE\ncfEwXpAfVLHw3LPdjI3LyGIRWNTBoJewwny+FEjCLmFo4uqHsBd0zIxhEu9Gztii\nh6ZLwyKno+91X9wVDYs1UnOrbzAHpBO2IJd8OuUusHefsxQuAL6l3btbgPubkS0w\nEiJ3w/uZiTq8lxk3QBdV895vo8/gHZVRWnYYuxOrRpqZ5SzQWGE0Pu7jGz36CivV\nyHA6+eYnchPmpYbZ7Ri9E9hkLhKiAgrhhgjN5TheY0zDPXhs6F3rzac8eYwVOLJU\nqSLdDSw3tm1QfHVuD6p2D9cT7AfjY0yxJ1C/qM/kKLIQsuWpmVM6DeAl+zohrubb\nbksl3McHAgMBAAECggEAGIbUiY9B1adWMDT2EbOqOI83ToZpe/+wkN5lDXGvnNts\nG+tOpotIk+mdZDcN11+NwmCziRUbGzi1k/poXqUHqWAvEx8iSeXewd6EmwkR219A\n9DFbwF4TbgBTaXEdcSWHO/gONWP+gcztRbxKjv8WgH1ZGBwXB/8D/55IYyrh6BVN\nsJQ2EZm//3bVZgot8v7JTDET1qISrOaGOnr5e/9VvziHlNB3Aej69fIuJaZth9KR\njFOGDl11wtJffE0aI1ECJzEZLSosCOGW7NVPUDSRJ64epD9OUdOUR31K8HmRB624\nd5xEd7eCEWwGLLlOUVEjFMxqSOTODrHMOZJCflQasQKBgQD5cIOtJ8z6a4xDJB7G\nU6UEeaf6N66SxAwn5zgAq1Wja3eBdLG8lF74JLVNw2EqFY5lDaz5mLe+CLj+mTKI\nwVeYiZzanjFTVFY1omB0nC7Uttly8hucQZzAtrZGhKGYvhZrViKMYzhofKe3HL7O\nRn7Aw0pncsDegVJh6DJ3cM3KJQKBgQDrd4i2KpjUJM3SkXzhzbg/dgbXJ+IiS8yl\nHDIEdouRo/+V1K6W9Kfkj/8YaPI1kOfw/o+G2BdUeAIQPZtToO1PWghyD/IW4PsM\nk297HW3SV5lwrBCDMJ4+64GGHiTjlw8MkgVsAfd2yk4O4GMP6QG11kw88hw2z/Eh\ngtGQ4/RGuwKBgQDvMYrDd+Ai3xDgrXlpW3ppYTPISK76BE9X0Gyuj54OmJY/qKRr\nnqe3MpQ9XrcFASjMFKIjsuO3smubkVKZOzYBiyzDo2DPdJc61VvDVqW9yx2YETyS\nyYREdLEzzCmd6+JZyX5VuyuzXp4BhOofqhAQTvVBYBQ9CivywRPr31snlQKBgQCX\nrkux1WTXm9G+aBwDNUsQDk6/wKBqKVvtrGkH+PlVW0ikUvoYogeZM61HIyuLmAnh\nc4ovefolXp0tqxHo4EyehkfUejMfy9PMuRjiPQXmrqlYLG8Co4n8zCaGp9pphYCb\nP2Egv2+S5SU9bgxCTn3cjexUgj3sjS0uwh+Pb1iHSwKBgQC5kKiH0cND9HtBjSwW\nvMRoei904JUVg4oFNQwPv9pSbjVlXXcR8wqh1fpVfUt1tRnZsl7rEaHG//K04yjp\ngBw6ebRdEXPp53/Pvw/UHP4bjlRu0xlMlPf+/CR7SwFNUvaXt+2+afRSuzJuhGue\n7jxVzHSdqpE2Q8EEUPs7zdmaZQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "flicker@flick-reels.iam.gserviceaccount.com",
+  "client_id": "112413204844032710341",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/flicker%40flick-reels.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

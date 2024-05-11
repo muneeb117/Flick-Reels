@@ -1,13 +1,14 @@
 import 'package:flick_reels/screens/profile/account_details.dart';
 import 'package:flick_reels/screens/profile/profile_video_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import '../../Controllers/profile_controller.dart';
 import '../../utils/app_constraints.dart';
 import '../../utils/colors.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   static String routeName = "/profileScreen";
@@ -20,12 +21,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final ProfileController profileController = Get.put(ProfileController());
+  late final ProfileController profileController;
 
   @override
   void initState() {
     super.initState();
+    profileController = Get.put(ProfileController());
     profileController.updateUserId(widget.uid);
+
   }
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (controller.users.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(
-                backgroundColor: Colors.yellow,
+                strokeWidth: 4,
+                backgroundColor: Colors.transparent,
                 color: AppColors.primaryBackground,
               ),
             );
@@ -49,16 +53,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: AppBar(
                       backgroundColor: Colors.transparent,
                       elevation: 0,
-                      // leading: Icon(
-                      //   Icons.person_add_alt_1_outlined,
-                      //   color: Colors.black,
-                      // ),
+
                       actions: [
                         GestureDetector(
                           onTap: (){
-                            Get.to(AccountDetails());
+                            Get.to(const AccountDetails());
                           },
-                          child: Icon(
+                          child:const Icon(
                             Icons.more_horiz,
                             color: Colors.black,
                           ),
@@ -66,9 +67,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                       title: Text(
                         controller.users['name'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
+                        style:const  TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          fontSize: 18,
                         ),
                       ),
                       centerTitle: true,
@@ -89,17 +91,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               imageUrl: controller.users['profilePhoto'],
                               height: 100,
                               width: 100,
-                              placeholder: (context, url) =>
-                                 const CircularProgressIndicator(),
-                              errorWidget: (context, url, error) => const Icon(
-                                Icons.error,
-                                color: Colors.black,
+                              placeholder: (context, url) => const CircleAvatar(
+                                backgroundImage: AssetImage('assets/user.png'), // Asset placeholder
+                                radius: 50,
+                              ),
+                              errorWidget: (context, url, error) => const CircleAvatar(
+                                backgroundImage: AssetImage('assets/user.png'), // Asset for error
+                                radius: 50,
                               ),
                             ),
                           ),
                         ],
                       ),
-            
+
                     const  SizedBox(
                         height: 10,
                       ),
@@ -124,6 +128,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 20,
                       ),
                       InkWell(
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+
                         onTap: () {
                           if (widget.uid == authController.user!.uid) {
                             authController.signOut();
@@ -139,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               borderRadius: BorderRadius.circular(15)),
                           child: Center(
                             child: Text(
-            
+
                               widget.uid == authController.user?.uid
                                   ? 'Sign Out'
                                   : controller.users['isFollowing']??false

@@ -5,11 +5,15 @@ import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 
 class AudioUtility {
   static Future<String?> uploadVideoAndGetEnhancedAudio(File videoFile) async {
-    var request = http.MultipartRequest('POST', Uri.parse('http://192.168.100.41:5000/upload'));
+    var request = http.MultipartRequest('POST', Uri.parse('http://172.20.4.226:5001/uploadVideo'));
     request.files.add(await http.MultipartFile.fromPath('file', videoFile.path));
     var streamedResponse = await request.send();
+    print(streamedResponse);
     var response = await http.Response.fromStream(streamedResponse);
+    print(response);
+
     if (response.statusCode == 200) {
+      print(response.body);
       Directory tempDir = await getTemporaryDirectory();
       String tempPath = tempDir.path;
       File enhancedAudioFile = File('$tempPath/enhancedAudio.mp3');

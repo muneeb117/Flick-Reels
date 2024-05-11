@@ -7,8 +7,14 @@ import '../../../models/video.dart';
 import '../../../utils/app_constraints.dart';
 import '../comment_screen.dart';
 import 'download_share_video.dart';
-class like_share_comment extends StatelessWidget {
-  const like_share_comment({
+
+class LikeShareComment extends StatefulWidget {
+  final Size size;
+  final VideoController videoController;
+  final Video data;
+  final ShareVideo shareVideo;
+
+  const LikeShareComment({
     super.key,
     required this.size,
     required this.videoController,
@@ -16,51 +22,59 @@ class like_share_comment extends StatelessWidget {
     required this.shareVideo,
   });
 
-  final Size size;
-  final VideoController videoController;
-  final Video data;
-  final ShareVideo shareVideo;
+  @override
+  _LikeShareCommentState createState() => _LikeShareCommentState();
+}
+
+class _LikeShareCommentState extends State<LikeShareComment> {
+  late bool isLiked;
+  late int likeCount;
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.data.likeList.contains(authController.user!.uid); // Initialize isLiked based on initial data
+    likeCount = widget.data.likeList.length;
+  }
+
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked;
+      if (isLiked) {
+        likeCount++;
+      } else {
+        likeCount--;
+      }
+    });
+    widget.videoController.likeVideo(widget.data.videoId);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 100,
-      margin: EdgeInsets.only(top: size.height / 5),
+      margin: EdgeInsets.only(top: widget.size.height / 5),
       child: Column(
         children: [
-          SizedBox(
-            height: 180.h,
-          ),
+          SizedBox(height: 180.h),
           Column(
             children: [
               InkWell(
-                onTap: () {
-                  videoController.likeVideo(
-                      data.videoId);
-                },
+                onTap: toggleLike,
                 child: Icon(
                   Icons.favorite,
                   size: 33,
-                  color: data.likeList.contains(
-                      authController.user!.uid)
-                      ? Colors.red
-                      : Colors.white,
+                  color: isLiked ? Colors.red : Colors.white,
                 ),
               ),
-              const SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               Text(
-                data.likeList.length.toString(),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15),
+                likeCount.toString(),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Column(
             children: [
               InkWell(
@@ -68,55 +82,40 @@ class like_share_comment extends StatelessWidget {
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
-                    backgroundColor: Colors
-                        .transparent,
+                    backgroundColor: Colors.transparent,
                     builder: (BuildContext context) {
-                      return CommentScreen(
-                          id: data.videoId);
+                      return CommentScreen(id: widget.data.videoId);
                     },
                   );
                 },
-                child:  SvgPicture.asset(
+                child: SvgPicture.asset(
                   "assets/chat_1.svg",
                   height: 28,
                   width: 28,
                 ),
               ),
-              const SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               Text(
-                data.totalComment.toString(),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15),
+                widget.data.totalComment.toString(),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           Column(
             children: [
               InkWell(
-                onTap: () =>
-                    shareVideo
-                        .showShareAndReportSheet(
-                        context, data.videoId),
+                onTap: () => widget.shareVideo.showShareAndReportSheet(context, widget.data.videoId),
                 child: Container(
-                    height: 25,
-                    width: 25,
-                    child:
-                    Image.asset("assets/send.png")),
+                  height: 25,
+                  width: 25,
+                  child: Image.asset("assets/send.png"),
+                ),
               ),
-              const SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               Text(
-                data.totalShare.toString(),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 15),
+                widget.data.totalShare.toString(),
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           ),

@@ -66,6 +66,14 @@ class _VideoEditorState extends State<VideoEditor> {
     ExportService.dispose();
     super.dispose();
   }
+  // void _disposeVideoController() {
+  //   if (_controller != null) {
+  //     _controller.video.pause(); // Pause the video
+  //     _controller.dispose(); // Dispose the controller
+  //     _controller = null; // Set the controller to null
+  //   }
+  // }
+
 
   void _showSuccessSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -373,23 +381,7 @@ class _VideoEditorState extends State<VideoEditor> {
                                     ],
                                   ),
                                 ),
-                                // ValueListenableBuilder(
-                                //   valueListenable: _isExporting,
-                                //   builder: (_, bool export, Widget? child) =>
-                                //       AnimatedSize(
-                                //         duration: kThemeAnimationDuration,
-                                //         child: export ? child : null,
-                                //       ),
-                                //   child: AlertDialog(
-                                //     title: ValueListenableBuilder(
-                                //       valueListenable: _exportingProgress,
-                                //       builder: (_, double value, __) => Text(
-                                //         "Exporting video ${(value * 100).ceil()}%",
-                                //         style: const TextStyle(fontSize: 12),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
+
                               ],
                             ),
                           ),
@@ -419,6 +411,8 @@ class _VideoEditorState extends State<VideoEditor> {
                 children: [
                   IconButton(
                     onPressed: () {
+                      _controller.video.pause();
+
                       // Navigate to the Video Editor screen
                       Navigator.push(
                         context,
@@ -494,6 +488,7 @@ class _VideoEditorState extends State<VideoEditor> {
                     height: 35, // Adjust this height as needed
                     child: GestureDetector(
                       onTap: () {
+                        _controller.video.pause();
                         Navigator.push(
                           context,
                           MaterialPageRoute(

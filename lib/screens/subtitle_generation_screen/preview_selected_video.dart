@@ -49,7 +49,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
       _isFetchingSubtitles = true; // Start fetching subtitles, show spinner
     });
 
-    var uri = Uri.parse('http://192.168.18.84:5000/upload');
+    var uri = Uri.parse('http://172.20.4.226:5000/upload');
     var request = http.MultipartRequest('POST', uri)
       ..fields['task_type'] = _taskType ?? 'transcribe'
       ..fields['target_language'] = _languageCode
@@ -251,8 +251,6 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      width: 280, // Specify a fixed width
-                      height: 180, // Specify a fixed height for consistency
                       margin: EdgeInsets.symmetric(
                           horizontal: 50), // Adjust according to screen width
                       padding: EdgeInsets.all(20), // Uniform padding
@@ -271,16 +269,20 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                       ),
                       child: Column(
                         children: [
-                          const SpinKitSquareCircle(
-                            color: Colors.white,
-                            size: 40.0,
+                          SizedBox(
+                            height: 30,
+                            width: 30,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 4,
+                              color: Colors.white,
+                            ),
                           ),
-                          const SizedBox(height: 60),
+                          const SizedBox(height: 15),
                           GradientText(
                             text: 'Generating captions with AI...',
-                            colors: [Colors.purple, Colors.deepOrange],
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            colors: [Colors.blue, Colors.purple],
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                         ],
                       ),

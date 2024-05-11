@@ -66,7 +66,7 @@ class _ShortVideoScreenState extends State<ShortVideoScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 builtUserDetails(data: data),
-                                like_share_comment(size: size, videoController: videoController, data: data, shareVideo: shareVideo),
+                                LikeShareComment(size: size, videoController: videoController, data: data, shareVideo: shareVideo),
 
                               ],
                             ))

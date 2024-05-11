@@ -372,6 +372,7 @@ class _VideoPlayerWithSubtitlesScreenState
               focusColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () {
+                _controller.dispose();
                 List<Subtitle> editedSubtitles =
                     List.generate(_controllers.length, (index) {
                   return Subtitle(
@@ -395,13 +396,14 @@ class _VideoPlayerWithSubtitlesScreenState
                 );
               },
               child: GradientText(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
                 colors: [
-                  Colors.purple,
-                  Colors.deepOrange, // A lighter shade of orange
+                  Colors.blue,
+                  Colors.purple, // A lighter shade of orange
                 ],
                 text: 'Continue',
                 fontSize: 15,
+
               ),
             ),
           ),

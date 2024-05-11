@@ -14,10 +14,19 @@ class ProfileController extends GetxController {
     super.onInit();
     // fetchUserVideos();
   }
-
-  updateUserId(String uid) {
+  void updateUserId(String uid) {
     _uid.value = uid;
-    getUserData();
+    // Reset user data to an empty state or a placeholder
+    _users.value = {
+      'name': 'Loading...',
+      'profilePhoto': 'assets/user.png',
+      'likes': '0',
+      'followers': '0',
+      'following': '0',
+      'isFollowing': false,
+    };
+    update(); // Force UI to refresh immediately with placeholder data
+    getUserData(); // Then load actual data
   }
 
   getUserData() async {

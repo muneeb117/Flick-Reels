@@ -41,7 +41,7 @@ class _VoiceOverState extends State<VoiceOver> {
   void initState() {
     super.initState();
     _voiceOverUtility = VoiceOverUtility(
-        apiKey: 'AIzaSyAh4sQ57SGO639U_7jVXum7jYXD0H1-_gg',
+        apiKey: 'AIzaSyC0aFKz66tzThTlwa4Pet6KrPpHo4c8YoE',
         audioPlayer: AudioPlayer());
   }
 

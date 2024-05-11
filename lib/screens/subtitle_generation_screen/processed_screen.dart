@@ -9,7 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../models/subtitle_model.dart';
-const String processSubtitlesUrl = 'http://192.168.18.84:5000/process-subtitles';
+const String processSubtitlesUrl = 'http://172.20.4.226:5000/process-subtitles';
 
 class ProcessedScreen extends StatefulWidget {
   final String videoPath;
@@ -60,7 +60,6 @@ class _ProcessedScreenState extends State<ProcessedScreen> {
 
         // Download the video file
         final File videoFile = await _downloadVideoFile(videoUrl);
-
         // Navigate to the Video Editor screen
         Navigator.push(
           context,
@@ -102,7 +101,10 @@ class _ProcessedScreenState extends State<ProcessedScreen> {
               children: [
                 Text('Processing Video....',style: TextStyle(color: Colors.white54),),
                 SizedBox(height: 20.h,),
-                CircularProgressIndicator(),
+                CircularProgressIndicator(
+                  strokeWidth: 4,
+                  color: Colors.white,
+                ),
               ],
             ),
           )

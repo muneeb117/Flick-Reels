@@ -1,4 +1,5 @@
 import 'package:flick_reels/screens/Video_Editor/videoPicker_page.dart';
+import 'package:flick_reels/screens/chatbot/chatbot_screen.dart';
 import 'package:flick_reels/screens/discover/discover_screen.dart';
 import 'package:flick_reels/screens/profile/profile_screen.dart';
 import 'package:flick_reels/screens/search/search_screen.dart';
@@ -16,7 +17,8 @@ Widget buildPage(index) {
     ShortVideoScreen(),
     DiscoverScreen(),
     VideoPickerScreen(),
-    Center(child: Text("chatbot "),),
+    // Center(child: Text("chatbot "),),
+    ChatScreen(),
    // AdvancedMediaProductionSuite(),
     ProfileScreen(uid: authController.user!.uid,),
   ];

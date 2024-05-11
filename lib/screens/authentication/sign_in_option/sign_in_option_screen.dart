@@ -23,7 +23,8 @@ class SignInOptionScreen extends StatelessWidget {
       body: Obx(() {
         if (loadingController.isLoading.value) {
           return const Center(child: CircularProgressIndicator(
-            backgroundColor: Colors.yellowAccent,
+            strokeWidth:4,
+            backgroundColor: Colors.transparent,
             color: AppColors.primaryBackground,
           ));
         } else {
