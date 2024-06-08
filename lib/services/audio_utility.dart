@@ -11,7 +11,6 @@ class AudioUtility {
     print(streamedResponse);
     var response = await http.Response.fromStream(streamedResponse);
     print(response);
-
     if (response.statusCode == 200) {
       print(response.body);
       Directory tempDir = await getTemporaryDirectory();

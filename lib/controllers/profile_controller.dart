@@ -16,7 +16,6 @@ class ProfileController extends GetxController {
   }
   void updateUserId(String uid) {
     _uid.value = uid;
-    // Reset user data to an empty state or a placeholder
     _users.value = {
       'name': 'Loading...',
       'profilePhoto': 'assets/user.png',
@@ -25,8 +24,8 @@ class ProfileController extends GetxController {
       'following': '0',
       'isFollowing': false,
     };
-    update(); // Force UI to refresh immediately with placeholder data
-    getUserData(); // Then load actual data
+    update();
+    getUserData();
   }
 
   getUserData() async {
@@ -92,54 +91,30 @@ class ProfileController extends GetxController {
     };
     update(); // Call update to refresh the UI with the new data
   }
-  followUser() async {
-    var doc = await firestore
-        .collection('users')
-        .doc(_uid.value)
-        .collection('followers')
-        .doc(authController.user!.uid)
-        .get();
+  void followUser() async {
+    bool isCurrentlyFollowing = _users.value['isFollowing'] ?? false;
+    int currentFollowers = int.tryParse(_users.value['followers'] ?? '0') ?? 0;
 
-    bool isFollowingNow;
-    if (!doc.exists) {
-      await firestore
-          .collection('users')
-          .doc(_uid.value)
-          .collection('followers')
-          .doc(authController.user!.uid)
-          .set({});
-      await firestore
-          .collection('users')
-          .doc(authController.user!.uid)
-          .collection('following')
-          .doc(_uid.value)
-          .set({});
-      isFollowingNow = true;
-    } else {
-      await firestore
-          .collection('users')
-          .doc(_uid.value)
-          .collection('followers')
-          .doc(authController.user!.uid)
-          .delete();
-      await firestore
-          .collection('users')
-          .doc(authController.user!.uid)
-          .collection('following')
-          .doc(_uid.value)
-          .delete();
-      isFollowingNow = false;
+    // Optimistically update the UI
+    _users.value['isFollowing'] = !isCurrentlyFollowing;
+    _users.value['followers'] = (!isCurrentlyFollowing ? currentFollowers + 1 : currentFollowers - 1).toString();
+    update();  // Update the GetX state to reflect changes immediately
+
+    try {
+      if (!isCurrentlyFollowing) {
+        // Perform the follow operation
+        await firestore.collection('users').doc(_uid.value).collection('followers').doc(authController.user!.uid).set({});
+        await firestore.collection('users').doc(authController.user!.uid).collection('following').doc(_uid.value).set({});
+      } else {
+        // Perform the unfollow operation
+        await firestore.collection('users').doc(_uid.value).collection('followers').doc(authController.user!.uid).delete();
+        await firestore.collection('users').doc(authController.user!.uid).collection('following').doc(_uid.value).delete();
+      }
+    } catch (e) {
+      // If an error occurs, revert the UI changes
+      _users.value['isFollowing'] = isCurrentlyFollowing;
+      _users.value['followers'] = currentFollowers.toString();
+      update();
     }
-
-    // Update followers count
-    _users.value.update(
-      'followers',
-          (value) => isFollowingNow ? (int.parse(value) + 1).toString() : (int.parse(value) - 1).toString(),
-      ifAbsent: () => isFollowingNow ? '1' : '0',
-    );
-
-    // Update 'isFollowing' state
-    _users.value['isFollowing'] = isFollowingNow;
-    update(); // Update the UI
   }
 }

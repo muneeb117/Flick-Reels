@@ -6,16 +6,25 @@ import '../../Controllers/comment_controller.dart';
 import '../../models/comment.dart';
 import '../../utils/app_constraints.dart';
 import '../../utils/colors.dart'; // Ensure this is correctly imported
-class CommentScreen extends StatelessWidget {
+class CommentScreen extends StatefulWidget {
   final String id;
-  final TextEditingController _commentController = TextEditingController();
-  final CommentController commentController = Get.put(CommentController());
 
   CommentScreen({Key? key, required this.id}) : super(key: key);
 
   @override
+  State<CommentScreen> createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
+  final TextEditingController _commentController = TextEditingController();
+
+  final CommentController commentController = Get.put(CommentController());
+  late bool isLiked;
+
+
+  @override
   Widget build(BuildContext context) {
-    commentController.updatePostId(id);
+    commentController.updatePostId(widget.id);
 
     return Stack(
       children: [
@@ -27,13 +36,13 @@ class CommentScreen extends StatelessWidget {
             return Container(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                borderRadius:const BorderRadius.vertical(top: Radius.circular(20)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset:const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
@@ -55,10 +64,11 @@ class CommentScreen extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildCommentsList(ScrollController scrollController) {
     return Obx(() {
       if (commentController.comments.isEmpty) {
-        return Center(child: Text("No comments yet")); // or any other placeholder
+        return const  Center(child: Text("No comments yet")); // or any other placeholder
       }
 
       return ListView.builder(
@@ -72,7 +82,6 @@ class CommentScreen extends StatelessWidget {
     });
   }
 
-
   Widget _buildCommentItem(Comment comment) {
     return ListTile(
       leading: CircleAvatar(
@@ -84,7 +93,7 @@ class CommentScreen extends StatelessWidget {
         children: [
           Text(
             ' ${comment.userName}',
-            style: TextStyle(
+            style:const  TextStyle(
               overflow: TextOverflow.ellipsis, // Truncate long usernames
 
               fontSize: 15,
@@ -94,7 +103,7 @@ class CommentScreen extends StatelessWidget {
           ),
           Text(
             ' ${comment.comment}',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15,
               color: Colors.black,
               fontWeight: FontWeight.w400,
@@ -109,11 +118,11 @@ class CommentScreen extends StatelessWidget {
           children: [
             Text(
               '${tago.format(comment.datePublshed.toDate())}',
-              style: TextStyle(fontSize: 12, color: Colors.black),
+              style:const TextStyle(fontSize: 12, color: Colors.black),
             ),
-            SizedBox(width: 5),
+            const  SizedBox(width: 5),
             Text('${comment.likes.length} likes',
-                style: TextStyle(fontSize: 12, color: Colors.black))
+                style: const TextStyle(fontSize: 12, color: Colors.black))
           ],
         ),
       ),
@@ -133,7 +142,7 @@ class CommentScreen extends StatelessWidget {
       child: Container(
         width: 40,
         height: 4,
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin:const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(2),
@@ -145,16 +154,16 @@ class CommentScreen extends StatelessWidget {
   Widget _buildCommentInput(BuildContext context) {
     return Container(
       color: Colors.white, // White background for the entire row
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+      padding:const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       child: Row(
         children: [
           Expanded(
             child: TextFormField(
               controller: _commentController,
-              style: TextStyle(color: Colors.black, fontSize: 14),
-              decoration: InputDecoration(
+              style: const TextStyle(color: Colors.black, fontSize: 14),
+              decoration:const InputDecoration(
                 labelText: 'Comment',
-                labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
+                labelStyle:  TextStyle(color: Colors.grey, fontSize: 14),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
                 ),
@@ -166,7 +175,7 @@ class CommentScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () => commentController.postComment(_commentController.text),
-            child: Text('Send', style: TextStyle(color: Colors.blue)),
+            child: const Text('Send', style: TextStyle(color: Colors.blue)),
           ),
         ],
       ),

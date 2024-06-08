@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../Controllers/video_controller.dart';
 import '../../components/video_player_item.dart';
+import '../../routes/name.dart';
 
 class ShortVideoScreen extends StatefulWidget {
   const ShortVideoScreen({Key? key}) : super(key: key);
@@ -17,6 +18,12 @@ class ShortVideoScreen extends StatefulWidget {
 class _ShortVideoScreenState extends State<ShortVideoScreen> {
   final VideoController videoController = Get.put(VideoController());
   ShareVideo shareVideo = ShareVideo();
+  @override
+  void initState() {
+    // TODO: implement initState
+    videoController.videoList;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +31,9 @@ class _ShortVideoScreenState extends State<ShortVideoScreen> {
         .of(context)
         .size;
     return SafeArea(
+
       child: Scaffold(
+
 
         body: Obx(() {
           return PageView.builder(
@@ -55,6 +64,17 @@ class _ShortVideoScreenState extends State<ShortVideoScreen> {
                           ),
                         ),
                       ),
+                    Positioned(
+                        top: 10,
+                        right: 16,
+                        child: IconButton(
+                          icon: Icon(Icons.search, color: Colors.white),
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.search);
+                          },
+                        ),
+                      ),
+
                     Column(
                       children: [
                          SizedBox(

@@ -345,6 +345,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
               });
             },
           ),
+
           Expanded(
             child: GestureDetector(
               onHorizontalDragUpdate: (details) {

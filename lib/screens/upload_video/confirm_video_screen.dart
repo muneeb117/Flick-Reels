@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flick_reels/components/reusable_button.dart';
 import 'package:flick_reels/components/reusable_script_container.dart';
+import 'package:flick_reels/screens/script_generator/widgets/button_widget.dart';
 import 'package:flick_reels/utils/toast_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,13 @@ class _ConfirmVideoScreenState extends State<ConfirmVideoScreen> {
               _buildUploadProgressIndicator(),
               SizedBox(height: 10.h,),
               _buildVideoInfoForm(),
-              _buildUploadButton(),
+              defaultButton(color: _isUploading
+                  ? Colors.grey
+                  : Colors.blue, text: _isUploading ? 'Uploading...' : 'Confirm Upload'
+                  , labelColor: Colors.white,
+                onTap: _isUploading ? null : _uploadVideo,
+              )
+              // _buildUploadButton(),
               ],// Re
           ),
         ),
@@ -147,7 +154,7 @@ class _ConfirmVideoScreenState extends State<ConfirmVideoScreen> {
         isEnabled: !_isUploading,
         gradientColors: _isUploading
             ? [Colors.grey, Colors.grey[400]!]
-            : [Colors.pinkAccent, Colors.purpleAccent],
+            : [Colors.blue, Colors.deepPurple],
       ),
     );
   }

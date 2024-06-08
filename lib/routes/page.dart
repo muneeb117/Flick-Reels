@@ -14,7 +14,6 @@ import 'package:flick_reels/screens/voice_over/voice_over.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../global.dart';
 import '../screens/application/application_page.dart';
 import '../screens/authentication/ForgotPassword/forgot_password.dart';
@@ -23,6 +22,7 @@ import '../screens/authentication/sign_in_option/sign_in_option_screen.dart';
 import '../screens/welcome/bloc/welcome_bloc.dart';
 import '../screens/welcome/welcome_screen.dart';
 import 'name.dart';
+
 
 class AppPage {
   static List<PageEntity> routes = [

@@ -24,7 +24,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   @override
   void initState() {
     super.initState();
-    playerController = VideoPlayerController.network(widget.videoUrl)
+    playerController = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
         if (mounted) {
           setState(() {
@@ -105,17 +105,17 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
           ),
         ),
       ),
-      Positioned(
-        top: 10,
-        right: 16,
-        child: IconButton(
-          icon: Icon(Icons.search, color: Colors.white),
-          onPressed: () {
-            playerController.pause();
-            Navigator.pushNamed(context, AppRoutes.search);
-          },
-        ),
-      ),
+      // Positioned(
+      //   top: 10,
+      //   right: 16,
+      //   child: IconButton(
+      //     icon: Icon(Icons.search, color: Colors.white),
+      //     onPressed: () {
+      //       playerController.pause();
+      //       Navigator.pushNamed(context, AppRoutes.search);
+      //     },
+      //   ),
+      // ),
     ]);
   }
 }

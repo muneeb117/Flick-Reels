@@ -10,6 +10,7 @@ import 'package:flick_reels/screens/voice_over/widgets/see_all.dart';
 import 'package:flick_reels/screens/voice_over/widgets/selectableAvatar.dart';
 import 'package:flick_reels/screens/voice_over/widgets/voice_data.dart';
 import 'package:flick_reels/services/voice_over_script.dart';
+import 'package:flick_reels/utils/toast_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +34,9 @@ class _VoiceOverState extends State<VoiceOver> {
   String? _selectedVoice;
   String? _generatedAudioPath;
   String? _selectedVideoPath;
-  bool _isLoading = false; // State to manage loading
+  bool _isLoading = false;
+  bool _isProcessingVoiceOver = false;
+
 
   VoiceOverUtility? _voiceOverUtility;
 
@@ -134,31 +137,46 @@ class _VoiceOverState extends State<VoiceOver> {
   }
 
   void handleVoiceOverProcess(String videoPath) async {
+    if (videoPath.isEmpty) {
+      toastInfo(context: context, msg: 'Please select a video template first');
+      return;
+    }
+
+    setState(() {
+      _isProcessingVoiceOver = true;
+    });
+
     await _voiceOverUtility!.requestPermissions();
     _selectedVideoPath = videoPath;
 
-    String textToConvert =
-        _isAIGenerated ? _scriptController.text : _manualTextController.text;
+    String textToConvert = _isAIGenerated ? _scriptController.text : _manualTextController.text;
     if (textToConvert.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Please enter or generate text")));
+      toastInfo(context: context, msg: 'Please enter or generate text');
+
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter or generate text")));
+      setState(() {
+        _isProcessingVoiceOver = false;
+      });
       return;
     }
 
-    _generatedAudioPath = await _voiceOverUtility!.convertTextToSpeech(
-        textToConvert, _selectedVoice ?? 'en-US-Wavenet-F');
+    _generatedAudioPath = await _voiceOverUtility!.convertTextToSpeech(textToConvert, _selectedVoice ?? 'en-US-Wavenet-F');
     if (_generatedAudioPath == null) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Failed to generate audio")));
+      toastInfo(context: context, msg: 'Failed to generate audio');
+
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to generate audio")));
+      setState(() {
+        _isProcessingVoiceOver = false;
+      });
       return;
     }
 
-    String outputVideoPath = await _voiceOverUtility!
-        .mergeAudioAndVideo(_generatedAudioPath!, _selectedVideoPath!);
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => VideoEditor(file: File(outputVideoPath))));
+    String outputVideoPath = await _voiceOverUtility!.mergeAudioAndVideo(_generatedAudioPath!, _selectedVideoPath!);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => VideoEditor(file: File(outputVideoPath))));
+
+    setState(() {
+      _isProcessingVoiceOver = false;
+    });
   }
 
   Widget buildVoiceSelector() {
@@ -229,7 +247,14 @@ class _VoiceOverState extends State<VoiceOver> {
               color: Colors.black, fontWeight: FontWeight.w600, fontSize: 18),
         ),
       ),
-      body: SingleChildScrollView(
+      body: _isProcessingVoiceOver
+          ? Center(
+            child: CircularProgressIndicator(
+              strokeWidth:4,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
+          ):
+      SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -278,13 +303,27 @@ class _VoiceOverState extends State<VoiceOver> {
             ),
             SizedBox(height: 20),
             defaultButton(
-                icon: Icons.slow_motion_video_rounded,
-                onTap: () {
-                  handleVoiceOverProcess(_selectedVideoPath!);
-                },
-                color: Colors.teal,
-                text: 'Play Voice Over',
-                labelColor: Colors.white),
+              icon: _isProcessingVoiceOver ? null : Icons.slow_motion_video_rounded,
+              onTap: () {
+                if (!_isProcessingVoiceOver) {
+                  handleVoiceOverProcess(_selectedVideoPath ?? "");
+                }
+              },
+              color: Colors.teal,
+              text: _isProcessingVoiceOver ? 'Processing...' : 'Play Voice Over',
+              labelColor: Colors.white,
+            ),
+        
+        
+            // defaultButton(
+            //     icon: Icons.slow_motion_video_rounded,
+            //     onTap: () {
+            //
+            //       handleVoiceOverProcess(_selectedVideoPath!);
+            //     },
+            //     color: Colors.teal,
+            //     text: 'Play Voice Over',
+            //     labelColor: Colors.white),
           ],
         ),
       ),
